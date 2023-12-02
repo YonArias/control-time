@@ -17,6 +17,7 @@ class MediumButton extends StatelessWidget {
       child: Material(
         color: theme.primary,
         child: InkWell(
+          onTap: onTap,
           child: Container(
             padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 30),
             width: 250,
@@ -30,7 +31,6 @@ class MediumButton extends StatelessWidget {
               ),
             ),
           ),
-          onTap: onTap,
         ),
       ),
     );

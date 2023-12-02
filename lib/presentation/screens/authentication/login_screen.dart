@@ -1,5 +1,6 @@
 import 'package:auth_buttons/auth_buttons.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:time_control_app/presentation/widgets/custom_buttons/medium_buttons.dart';
 import 'package:time_control_app/presentation/widgets/custom_inputs/text_input.dart';
 
@@ -57,9 +58,8 @@ class LoginScreen extends StatelessWidget {
                   if (_formkey.currentState!.validate()) {
                     // TODO: Authentificar con CORREO CON firebase
 
-
-                    
                     // TODO: REDIRECCIONAR AL HOME
+                    context.goNamed('home');
                   }
                 },
               ),
