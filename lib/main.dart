@@ -4,8 +4,13 @@ import 'package:time_control_app/config/router/app_router.dart';
 import 'package:time_control_app/config/theme/app_theme.dart';
 import 'package:time_control_app/presentation/providers/chronometer_provider.dart';
 import 'package:time_control_app/presentation/providers/counter_provider.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
-void main() {
+void main() async {
+  await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const MainApp());
 }
 

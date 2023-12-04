@@ -1,100 +1,63 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:time_control_app/presentation/providers/chronometer_provider.dart';
+import 'package:time_control_app/presentation/views/views.dart';
 
 // TODO: MEJORAR EL LLAMADO A LOS PROVIDER
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  int _selectedIndex = 0;
+  static const List<Widget> _widgetOptions = [
+    HistoryView(),
+    RecordatorioView(),
+  ];
+
+  // Funcion para cambiar de index
+  void _onItemTapped(int index) {
+    print('$index');
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: Drawer(
-        child: ListView.builder(
-          itemCount: context.watch<ChronometerProvider>().laps.length,
-          itemBuilder: (context, index) {
-            return ListTile(
-              title: Text('Tiempo ${index+1}'),
-              subtitle: Text('Segundos: ${context.watch<ChronometerProvider>().laps[index]}'),
-            );
-          },
-        ),
+      // drawer: Drawer(
+      //   child: ListView.builder(
+      //     itemCount: context.watch<ChronometerProvider>().laps.length,
+      //     itemBuilder: (context, index) {
+      //       return ListTile(
+      //         title: Text('Tiempo ${index+1}'),
+      //         subtitle: Text('Segundos: ${context.watch<ChronometerProvider>().laps[index]}'),
+      //       );
+      //     },
+      //   ),
+      // ),
+      bottomNavigationBar: BottomNavigationBar(
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.alarm_add),
+            label: 'Time',
+          ),
+        ],
+        currentIndex: _selectedIndex,
+        onTap: _onItemTapped,
+        selectedItemColor: Colors.amber,
       ),
       appBar: AppBar(
         title: const Text('Control TIME'),
       ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          // Muestra la hora que transcurre
-          Container(
-            padding: const EdgeInsets.all(10),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
-              color: Theme.of(context).colorScheme.primary,
-            ),
-            child: Text(
-              context.select(
-                  (ChronometerProvider chronometer) => chronometer.time),
-              style: const TextStyle(fontSize: 42, color: Colors.white),
-            ),
-          ),
-          const SizedBox(
-            height: 30,
-          ),
-
-          // Button de accion
-          _ControlTime()
-        ],
-      ),
-    );
-  }
-}
-
-class _ControlTime extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        // TODO: PROBABLEMENTE SE UNA A UN SOLO BOTON EL START Y STOP
-        IconButton(
-          icon: const Icon(
-            Icons.play_circle_outlined,
-            size: 42,
-          ),
-          onPressed: () {
-            // Inicia el tiempo
-            context.read<ChronometerProvider>().startStopTimer();
-          },
-        ),
-        const SizedBox(
-          width: 20,
-        ),
-        IconButton(
-          icon: const Icon(
-            Icons.alarm_add_outlined,
-            size: 42,
-          ),
-          onPressed: () {
-            // Para el tiempo
-            context.read<ChronometerProvider>().startStopTimer();
-          },
-        ),
-        const SizedBox(
-          width: 20,
-        ),
-        IconButton(
-          icon: const Icon(
-            Icons.stop_circle_outlined,
-            size: 42,
-          ),
-          onPressed: () {
-            context.read<ChronometerProvider>().restart();
-          },
-        ),
-      ],
+      body: _widgetOptions.elementAt(_selectedIndex),
     );
   }
 }

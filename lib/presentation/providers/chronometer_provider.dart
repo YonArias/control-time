@@ -1,10 +1,26 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+//? import 'package:shared_preferences/shared_preferences.dart';
 
 class ChronometerProvider extends ChangeNotifier {
   int _time = 0;
   bool isRunning = false;
-  List<int> laps = [];
+  List<String> laps = [];
+
+  // TODO: APRENDER MAS SOBRE SHARED PREFERENCES
+  // Future<void> cargarDatos() async {
+  //   final SharedPreferences prefs = await SharedPreferences.getInstance();;
+  //   final List<String>? newlaps = prefs.getStringList('laps');
+  //   laps = newlaps ?? [];
+  //   print('Se cargaron los datos $laps');
+  //   notifyListeners();
+  // }
+
+  // Future<void> guardarDatos() async {
+  //   final SharedPreferences prefs = await SharedPreferences.getInstance();;
+  //   prefs.setStringList('laps', laps);
+  //   print('Guardando el array ${prefs.getStringList('laps')}');
+  // }
 
   StreamSubscription<int>? _timeSucription;
 
@@ -44,12 +60,13 @@ class ChronometerProvider extends ChangeNotifier {
 
   // Finaliza el cronometro
   void restart() {
-    laps.add(_time);
+    laps.add(_time.toString());
+    print(laps);
+    // guardarDatos();
     _time = 0;
     _timeSucription?.pause();
     _timeSucription?.cancel();
     isRunning = false;
-    print(laps);
     notifyListeners();
   }
 }

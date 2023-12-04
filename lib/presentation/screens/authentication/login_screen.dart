@@ -1,6 +1,7 @@
 import 'package:auth_buttons/auth_buttons.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+// import 'package:time_control_app/presentation/providers/chronometer_provider.dart';
 import 'package:time_control_app/presentation/widgets/custom_buttons/medium_buttons.dart';
 import 'package:time_control_app/presentation/widgets/custom_inputs/text_input.dart';
 
@@ -56,6 +57,9 @@ class LoginScreen extends StatelessWidget {
                 title: 'Login',
                 onTap: () {
                   if (_formkey.currentState!.validate()) {
+                    // Cargar los datos
+                    // ChronometerProvider().cargarDatos();
+
                     // TODO: Authentificar con CORREO CON firebase
 
                     // TODO: REDIRECCIONAR AL HOME
@@ -80,6 +84,12 @@ class LoginScreen extends StatelessWidget {
               GoogleAuthButton(
                 onPressed: () {
                   // TODO: AUTHENTIFICAR PARA GOOGLE FIREBASE
+                  // ChronometerProvider().cargarDatos();
+
+                    // TODO: Authentificar con CORREO CON firebase
+
+                    // TODO: REDIRECCIONAR AL HOME
+                  context.goNamed('home');
                 },
                 style: const AuthButtonStyle(
                   iconType: AuthIconType.secondary,
