@@ -1,26 +1,43 @@
 {
   "project_info": {
-    "project_number": "663200496040",
-    "project_id": "mina-control",
-    "storage_bucket": "mina-control.appspot.com"
+    "project_number": "96212872871",
+    "project_id": "control-time-app-3ddc9",
+    "storage_bucket": "control-time-app-3ddc9.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:663200496040:android:cb1eb55ff4756fa348c59d",
+        "mobilesdk_app_id": "1:96212872871:android:928c05ba2c7ce1a2a87582",
         "android_client_info": {
           "package_name": "com.example.time_control_app"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "96212872871-ptv8juno8h62keuji7i182ophri8up9a.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
-          "current_key": "AIzaSyDV_NbWLwN--69qkoZc5MgRz9ZN_jjX1K0"
+          "current_key": "AIzaSyBv5_7IjjR63aLTyoV4gzqS-bc2IE2SH6Q"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "96212872871-ptv8juno8h62keuji7i182ophri8up9a.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "96212872871-332mgcm14stmbmnb49s82ctbg7tfl0d7.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.controlMineroApp.RunnerTests"
+              }
+            }
+          ]
         }
       }
     }

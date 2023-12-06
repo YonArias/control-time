@@ -53,10 +53,10 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyDV_NbWLwN--69qkoZc5MgRz9ZN_jjX1K0',
-    appId: '1:663200496040:android:cb1eb55ff4756fa348c59d',
-    messagingSenderId: '663200496040',
-    projectId: 'mina-control',
-    storageBucket: 'mina-control.appspot.com',
+    apiKey: 'AIzaSyBv5_7IjjR63aLTyoV4gzqS-bc2IE2SH6Q',
+    appId: '1:96212872871:android:928c05ba2c7ce1a2a87582',
+    messagingSenderId: '96212872871',
+    projectId: 'control-time-app-3ddc9',
+    storageBucket: 'control-time-app-3ddc9.appspot.com',
   );
 }
