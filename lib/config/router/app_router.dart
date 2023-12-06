@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:go_router/go_router.dart';
+import 'package:time_control_app/presentation/screens/mobility/select_mobility_screen.dart';
 import 'package:time_control_app/presentation/screens/profile/profile_user_screen.dart';
 import 'package:time_control_app/presentation/screens/screens.dart';
 
@@ -23,6 +24,11 @@ final appRouter = GoRouter(
       name: 'profile',
       path: '/home/profile',
       builder: (context, state) => const ProfileUserScreen(),
+    ),
+    GoRoute(
+      name: 'selectVehicle',
+      path: '/home/selectVehicle',
+      builder: (context, state) => const SelectMobilityScreen(),
     ),
   ],
 );

@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:time_control_app/presentation/views/historical_view.dart';
 import 'package:time_control_app/presentation/views/views.dart';
 
 // TODO: MEJORAR EL LLAMADO A LOS PROVIDER
@@ -15,7 +16,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   int _selectedIndex = 0;
   static const List<Widget> _widgetOptions = [
-    HistoryView(),
+    HistoricalView(),
     RecordatorioView(),
   ];
 
@@ -37,8 +38,8 @@ class _HomeScreenState extends State<HomeScreen> {
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
+            icon: Icon(Icons.list_alt_outlined),
+            label: 'Historical',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.alarm_add),
@@ -55,13 +56,13 @@ class _HomeScreenState extends State<HomeScreen> {
         title: const Text('Probando el AppBar'),
         actions: [
           InkWell(
+            borderRadius: BorderRadius.circular(20),
+            onTap: ()=>context.goNamed('profile'),
             child: CircleAvatar(
               backgroundImage: NetworkImage(user?.photoURL ?? ''),
             ),
-            borderRadius: BorderRadius.circular(20),
-            onTap: ()=>context.goNamed('profile'),
           ),
-          SizedBox(width: 20,),
+          const SizedBox(width: 20,),
         ],
       ),
       body: _widgetOptions.elementAt(_selectedIndex),
