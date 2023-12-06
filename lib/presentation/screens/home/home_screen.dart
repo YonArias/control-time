@@ -1,4 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:time_control_app/presentation/views/views.dart';
 
 // TODO: MEJORAR EL LLAMADO A LOS PROVIDER
@@ -25,20 +27,13 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
+  // Acceso al usuario registrado
+  User? user = FirebaseAuth.instance.currentUser;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // drawer: Drawer(
-      //   child: ListView.builder(
-      //     itemCount: context.watch<ChronometerProvider>().laps.length,
-      //     itemBuilder: (context, index) {
-      //       return ListTile(
-      //         title: Text('Tiempo ${index+1}'),
-      //         subtitle: Text('Segundos: ${context.watch<ChronometerProvider>().laps[index]}'),
-      //       );
-      //     },
-      //   ),
-      // ),
+      // BottomNavigation
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
@@ -54,24 +49,22 @@ class _HomeScreenState extends State<HomeScreen> {
         onTap: _onItemTapped,
         selectedItemColor: Colors.amber,
       ),
+      
+      // APPBAR
       appBar: AppBar(
-        title: const Text('Control TIME'),
+        title: const Text('Probando el AppBar'),
+        actions: [
+          InkWell(
+            child: CircleAvatar(
+              backgroundImage: NetworkImage(user?.photoURL ?? ''),
+            ),
+            borderRadius: BorderRadius.circular(20),
+            onTap: ()=>context.goNamed('profile'),
+          ),
+          SizedBox(width: 20,),
+        ],
       ),
       body: _widgetOptions.elementAt(_selectedIndex),
     );
   }
 }
-
-// Center(
-          //   // Haciendo uso del provider
-          //   child: Text('${context.watch<CounterProvider>().counter}')
-          // ),
-
-          // ElevatedButton(
-          //   onPressed: ()=>context.read<CounterProvider>().increment(),
-          //   child: const Text('Aumentar contador'),
-          // ),
-
-          // ElevatedButton(
-          //   onPressed: ()=>context.read<CounterProvider>().disminuye(),
-          //   child: const Text('Reducir contador'))

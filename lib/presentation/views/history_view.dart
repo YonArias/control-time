@@ -16,7 +16,9 @@ class HistoryView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // TODO: Trata de poner un selector de vehiculo 
     return ListView.builder(
+      
       itemCount: context.watch<ChronometerProvider>().laps.length, // provider
       itemBuilder: (context, index) {
         return Padding(
