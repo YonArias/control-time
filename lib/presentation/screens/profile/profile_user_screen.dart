@@ -41,12 +41,11 @@ class _ProfileUserScreenState extends State<ProfileUserScreen> {
 
           // Button para logout
           ElevatedButton(
-            onPressed: () {
+            onPressed: () async {
               auth.signOut();
-
               context.goNamed('main');
             },
-            child: Text('Logout'),
+            child: const Text('Logout'),
           ),
         ],
       ),
@@ -94,7 +93,8 @@ class ProfileUser extends StatelessWidget {
                     fontSize: 16,
                   ),
                 ),
-                Text(user?.email ?? '', style: TextStyle(fontSize: 12)),
+                Text(user?.email ?? '', style: const TextStyle(fontSize: 12)),
+                Text('${user?.phoneNumber ?? 0}'),
               ],
             ),
           )

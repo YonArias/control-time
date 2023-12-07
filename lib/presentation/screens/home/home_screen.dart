@@ -66,6 +66,28 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
       ),
       body: _widgetOptions.elementAt(_selectedIndex),
+      floatingActionButton: FloatingActionButton(
+        onPressed: (){
+          showDialog(
+            context: context,
+            builder: (context) {
+              return AlertDialog(
+                title: const Text('Probando alertas'),
+                content: const Text('Todavia no hace nada este button'),
+                actions: [
+                  TextButton(
+                    child: const Text('Aceptar'),
+                    onPressed: () {
+                      context.pop(context);
+                    },
+                  ),
+                ],
+              );
+            },
+          );
+        },
+        child: const Icon(Icons.add),
+      ),
     );
   }
 }
