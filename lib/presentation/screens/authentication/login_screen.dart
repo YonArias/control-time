@@ -1,118 +1,44 @@
-import 'package:auth_buttons/auth_buttons.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-// import 'package:time_control_app/presentation/providers/chronometer_provider.dart';
-import 'package:time_control_app/presentation/widgets/custom_buttons/medium_buttons.dart';
-import 'package:time_control_app/presentation/widgets/custom_inputs/text_input.dart';
+import 'package:social_login_buttons/social_login_buttons.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class LoginScreen extends StatefulWidget {
-  LoginScreen({super.key});
+  const LoginScreen({super.key});
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  // Llave para el formulario
-  final _formkey = GlobalKey<FormState>();
-
-  // Controladores para el formulario
-  late TextEditingController emailController;
-  late TextEditingController passwordController;
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    emailController = TextEditingController();
-    passwordController = TextEditingController();
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    // TODO: implement dispose
-    super.dispose();
-    emailController.dispose();
-    passwordController.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.symmetric(horizontal: 20),
-        child: Form(
-          key: _formkey,
+      body: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: Center(
           child: Column(
             children: [
-              // Imagen de LOGIN
-              const Image(
-                image: AssetImage('assets/image/logo-pormientras.png'),
-                height: 300,
+              // Image Logo
+              Image.asset('assets/image/logo-pormientras.png', height: 350,),
+              const Text(
+                'Inicia session',
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold
+                ),
               ),
-              const SizedBox(
-                height: 10,
+              const Text(
+                'Conectate con tu cuenta google unica vez',
               ),
-
-              // Formulario
-              TextInput(
-                // TODO: VERIFICAR QUE SEA CORREO
-                label: 'Email',
-                icon: Icons.email_outlined,
-                controller: emailController,
-                validator: 'Not email',
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              TextInput(
-                label: 'Password',
-                icon: Icons.remove_red_eye_outlined,
-                controller: passwordController,
-                validator: 'Not password',
-                hidden: true,
-              ),
+      
               const SizedBox(
                 height: 30,
               ),
-              MediumButton(
-                title: 'Login',
-                onTap: () async {
-                  if (_formkey.currentState!.validate()) {
-                    // Cargar los datos
-                    // ChronometerProvider().cargarDatos();
-
-                    // TODO: Authentificar con CORREO CON firebase
-                    // Iniciar sesión con una dirección de correo electrónico y una contraseña
-                    UserCredential userCredential = await FirebaseAuth.instance
-                        .signInWithEmailAndPassword(
-                            email: emailController.text,
-                            password: passwordController.text);
-                    // Mostrar un mensaje de bienvenida al usuario
-                    if (userCredential.user != null) {
-                      // REDIRECCIONANDO AL HOME
-                      context.goNamed('home');
-                    }
-                  }
-                },
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-
-              // Logueo de GOOGLE
-              const Text(
-                'o',
-                style: TextStyle(
-                  fontSize: 18,
-                ),
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              GoogleAuthButton(
+      
+              SocialLoginButton(
+                buttonType: SocialLoginButtonType.google,
                 onPressed: () async {
                   // TODO: AUTHENTIFICAR PARA GOOGLE FIREBASE
                   // ChronometerProvider().cargarDatos();
@@ -120,10 +46,19 @@ class _LoginScreenState extends State<LoginScreen> {
                   // TODO: REDIRECCIONAR AL HOME
                   context.goNamed('home');
                 },
-                style: const AuthButtonStyle(
-                  iconType: AuthIconType.secondary,
+                borderRadius: 50,
+              ),
+      
+              const SizedBox(
+                height: 50,
+              ),
+      
+              const Padding(
+                padding: EdgeInsets.all(50.0),
+                child: Text(
+                  'Controla tus tiempos, no pierdas ningun segundo bro', 
+                  textAlign: TextAlign.center
                 ),
-                themeMode: ThemeMode.light,
               ),
             ],
           ),

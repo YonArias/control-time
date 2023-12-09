@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 //? import 'package:shared_preferences/shared_preferences.dart';
 
@@ -6,6 +7,10 @@ class ChronometerProvider extends ChangeNotifier {
   int _time = 0;
   bool isRunning = false;
   List<String> laps = [];
+
+  // Inicializamos la instancia del registro
+  FirebaseFirestore firestore = FirebaseFirestore.instance;
+  late CollectionReference registertimes = firestore.collection('times');
 
   // TODO: APRENDER MAS SOBRE SHARED PREFERENCES
   // Future<void> cargarDatos() async {
@@ -61,12 +66,17 @@ class ChronometerProvider extends ChangeNotifier {
   // Finaliza el cronometro
   void restart() {
     laps.add(_time.toString());
-    print(laps);
     // guardarDatos();
+    agregarTime(_time);
     _time = 0;
     _timeSucription?.pause();
     _timeSucription?.cancel();
     isRunning = false;
+
     notifyListeners();
+  }
+
+  Future<void> agregarTime(int time) async {
+    await registertimes.add({'time': time});
   }
 }
