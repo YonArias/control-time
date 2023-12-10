@@ -1,8 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 import 'package:social_login_buttons/social_login_buttons.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:time_control_app/presentation/providers/user_provider.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -14,6 +16,8 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
+    final userProvider = context.watch<UserProvider>();
+
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(20.0),
@@ -21,44 +25,51 @@ class _LoginScreenState extends State<LoginScreen> {
           child: Column(
             children: [
               // Image Logo
-              Image.asset('assets/image/logo-pormientras.png', height: 350,),
+              Image.asset(
+                'assets/image/logo-pormientras.png',
+                height: 350,
+              ),
               const Text(
                 'Inicia session',
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold
-                ),
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
               const Text(
                 'Conectate con tu cuenta google unica vez',
               ),
-      
+
               const SizedBox(
                 height: 30,
               ),
-      
+
               SocialLoginButton(
                 buttonType: SocialLoginButtonType.google,
                 onPressed: () async {
+                  // final firestore = FirebaseFirestore.instance;
+                  FirebaseAuth auth = FirebaseAuth.instance;
                   // TODO: AUTHENTIFICAR PARA GOOGLE FIREBASE
-                  // ChronometerProvider().cargarDatos();
-                  await signInWithGoogle();
-                  // TODO: REDIRECCIONAR AL HOME
-                  context.goNamed('home');
+                  UserCredential credentialUser = await signInWithGoogle();
+
+                  if (await userProvider.ValidarIngreso(
+                      credentialUser.user!.email)) {
+                    context.goNamed('home');
+                  } else {
+                    auth.signOut();
+                  }
+                  // await signInWithGoogle();
+                  // context.goNamed('home');
                 },
                 borderRadius: 50,
               ),
-      
+
               const SizedBox(
                 height: 50,
               ),
-      
+
               const Padding(
                 padding: EdgeInsets.all(50.0),
                 child: Text(
-                  'Controla tus tiempos, no pierdas ningun segundo bro', 
-                  textAlign: TextAlign.center
-                ),
+                    'Controla tus tiempos, no pierdas ningun segundo bro',
+                    textAlign: TextAlign.center),
               ),
             ],
           ),
