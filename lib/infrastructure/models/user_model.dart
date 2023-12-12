@@ -28,7 +28,6 @@ class UserModel {
 
   User toTranportEntity() => User(
         name: name,
-        lastname: lastname,
         rol: lastname,
         gmail: gmail,
         phone: phone,
@@ -37,7 +36,6 @@ class UserModel {
 
   Map<String, dynamic> toJson() => {
     'name': name,
-    'lastname': lastname,
     'rol': lastname,
     'gmail': gmail,
     'phone': phone,

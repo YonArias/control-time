@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -14,6 +15,14 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  List<String> opciones = ['ADMIN', 'OPERARIO', 'JEFE'];
+  late String opcion;
+  @override
+  void initState() {
+    opcion = 'OPERARIO';
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     final userProvider = context.watch<UserProvider>();
@@ -36,6 +45,22 @@ class _LoginScreenState extends State<LoginScreen> {
               const Text(
                 'Conectate con tu cuenta google unica vez',
               ),
+              const SizedBox(
+                height: 20,
+              ),
+
+              // SELECCIONAR ROL
+              DropdownButtonFormField(
+                items: opciones
+                    .map((e) => DropdownMenuItem(value: e, child: Text(e)))
+                    .toList(),
+                onChanged: (value) {
+                  setState(() {
+                    opcion = value.toString();
+                  });
+                },
+                decoration: const InputDecoration(label: Text('Tipo de ROL')),
+              ),
 
               const SizedBox(
                 height: 30,
@@ -44,17 +69,30 @@ class _LoginScreenState extends State<LoginScreen> {
               SocialLoginButton(
                 buttonType: SocialLoginButtonType.google,
                 onPressed: () async {
-                  // final firestore = FirebaseFirestore.instance;
+                  final firestore = FirebaseFirestore.instance;
                   FirebaseAuth auth = FirebaseAuth.instance;
                   // TODO: AUTHENTIFICAR PARA GOOGLE FIREBASE
                   UserCredential credentialUser = await signInWithGoogle();
 
-                  if (await userProvider.ValidarIngreso(
-                      credentialUser.user!.email)) {
-                    context.goNamed('home');
+                  // Creamos el usuario
+                  if (credentialUser.additionalUserInfo!.isNewUser) {
+                    firestore.collection('user').add({
+                      'name': credentialUser.user!.displayName,
+                      'rol': opcion,
+                      'gmail': credentialUser.user!.email,
+                      'phone': credentialUser.user!.phoneNumber ?? 0,
+                      'isValidate': false,
+                    });
                   } else {
-                    auth.signOut();
+                     if (await userProvider.ValidarIngreso(
+                      credentialUser.user!.email)) {
+                      context.goNamed('home');
+                    } else {
+                      auth.signOut();
                   }
+                  }
+
+                 
                   // await signInWithGoogle();
                   // context.goNamed('home');
                 },

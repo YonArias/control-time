@@ -30,4 +30,16 @@ class UserProvider extends ChangeNotifier {
 
     return validado;
   }
+
+  bool isOperador(String? email) {
+    bool operator = false;
+
+    users.forEach((element) {
+      if (element.gmail == email) {
+        element.rol == 'OPERARIO' ? operator = true : operator = false;
+      }
+    });
+
+    return operator;
+  }
 }
