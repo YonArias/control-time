@@ -49,14 +49,14 @@ class __FormRegisterState extends State<_FormRegister> {
   late TextEditingController nameController;
   late TextEditingController lastnameController;
   late TextEditingController gmailController;
-  late TextEditingController phoneController;
+  late TextEditingController passwordController;
 
   @override
   void initState() {
     nameController = TextEditingController(text: '');
     lastnameController = TextEditingController(text: '');
     gmailController = TextEditingController(text: '');
-    phoneController = TextEditingController(text: '');
+    passwordController = TextEditingController(text: '');
     super.initState();
   }
 
@@ -65,7 +65,7 @@ class __FormRegisterState extends State<_FormRegister> {
     nameController.dispose();
     lastnameController.dispose();
     gmailController.dispose();
-    phoneController.dispose();
+    passwordController.dispose();
     super.dispose();
   }
 
@@ -93,8 +93,6 @@ class __FormRegisterState extends State<_FormRegister> {
             validator: (value) {
               if (value == null || value.isEmpty) {
                 return 'Correo obligatorio';
-              } else if (value.contains('@gmail.com')) {
-                return 'No termina en @gmail.com';
               }
               return null;
             },
@@ -115,8 +113,8 @@ class __FormRegisterState extends State<_FormRegister> {
 
           // Telefono
           TextFormField(
-            controller: phoneController,
-            decoration: const InputDecoration(label: Text('Telefono')),
+            controller: passwordController,
+            decoration: const InputDecoration(label: Text('Password')),
           ),
 
           // BUTTON
@@ -128,7 +126,7 @@ class __FormRegisterState extends State<_FormRegister> {
 
                 await auth.createUserWithEmailAndPassword(
                   email: gmailController.text,
-                  password: phoneController.text,
+                  password: passwordController.text,
                 );
 
                 firebase.collection('user').doc().set({
@@ -136,20 +134,20 @@ class __FormRegisterState extends State<_FormRegister> {
                   'lastname': lastnameController.text,
                   'gmail': gmailController.text,
                   'rol': opcion,
-                  'phone': phoneController.text,
+                  'active': false,
                   'isValidate': false
                 });
 
                 auth.signOut();
 
-                context.goNamed('login');
+                context.goNamed('main');
               }
             },
             child: const Text('Registrar'),
           ),
 
           ElevatedButton(
-            onPressed: () => context.goNamed('login'),
+            onPressed: () => context.goNamed('main'),
             child: const Text('Iniciar sesion'),
           ),
         ],

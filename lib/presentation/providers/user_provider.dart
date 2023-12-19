@@ -1,45 +1,24 @@
-import 'package:flutter/foundation.dart';
-import 'package:time_control_app/domain/entities/user.dart';
-import 'package:time_control_app/domain/repositories/user_repository.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:time_control_app/data/datasources/user_remote_datasource_impl.dart';
+import 'package:time_control_app/data/repository/user_repository_impl.dart';
+import 'package:time_control_app/domain/usecases/users_usecases.dart';
 
-class UserProvider extends ChangeNotifier {
-  final UserRepository userRepository;
+final userDatasourceProvider =
+    Provider<UserRemoteDatasourceImpl>((ref) => UserRemoteDatasourceImpl());
 
-  UserProvider({required this.userRepository});
+final userRepositoryProvider =
+    Provider<UserRepositoryImpl>((ref) => UserRepositoryImpl(
+          remoteDataSource: ref.read(userDatasourceProvider),
+        ));
 
-  bool initialLoading = true;
-  List<User> users = [];
+// Caso de uso
+final getUsersProvider =
+    Provider<GetUsersUseCase>((ref) => GetUsersUseCase(
+      userRepository: ref.read(userRepositoryProvider),
+    ));
 
-  Future<void> loadUser() async {
-    final newUsers = await userRepository.getUser();
-
-    users.addAll(newUsers);
-    initialLoading = false;
-
-    notifyListeners();
-  }
-
-  Future<bool> ValidarIngreso(String? email) async {
-    bool validado = false;
-
-    users.forEach((element) {
-      if (element.gmail == email) {
-        validado = element.isValidate;
-      }
-    });
-
-    return validado;
-  }
-
-  bool isOperador(String? email) {
-    bool operator = false;
-
-    users.forEach((element) {
-      if (element.gmail == email) {
-        element.rol == 'OPERARIO' ? operator = true : operator = false;
-      }
-    });
-
-    return operator;
-  }
-}
+// ** ACTUALIZAR USER
+final updateUserActivityProvider = Provider<UpdateUsersUseCase>((ref) {
+  final userRepository = ref.read(userRepositoryProvider);
+  return UpdateUsersUseCase(userRepository: userRepository);
+});

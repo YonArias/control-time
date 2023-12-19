@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "96212872871",
+    "firebase_url": "https://control-time-app-3ddc9-default-rtdb.firebaseio.com",
     "project_id": "control-time-app-3ddc9",
     "storage_bucket": "control-time-app-3ddc9.appspot.com"
   },
@@ -13,6 +14,14 @@
         }
       },
       "oauth_client": [
+        {
+          "client_id": "96212872871-pb8j7scqbnn3023l44h2uo8h4obtaetq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.time_control_app",
+            "certificate_hash": "0cd6c17842ab741b8de52356379dbeb22cdf1f64"
+          }
+        },
         {
           "client_id": "96212872871-ptv8juno8h62keuji7i182ophri8up9a.apps.googleusercontent.com",
           "client_type": 3

@@ -1,23 +1,19 @@
 import 'package:flutter/foundation.dart';
-import 'package:time_control_app/domain/entities/transport.dart';
-import 'package:time_control_app/domain/repositories/transport_repository.dart';
+import 'package:time_control_app/data/models/transport_model.dart';
 
 class TransportProvider extends ChangeNotifier {
-  final TransportRepository transportRepository;
 
   bool initialLoading = true;
   List<Transport> tranports = [];
 
-  TransportProvider({required this.transportRepository});
+  // Future<void> loadTransport() async {
+  //   final newTransports = Transport(name: 'name', type: 'type', placa: 'placa', ntank: 3, capacityTank: 3, fuel: 'fuel', available: true);
 
-  Future<void> loadTransport() async {
-    final newTransports = await transportRepository.getTransportByPage(1);
+  //   tranports.addAll(newTransports as Iterable<Transport>);
+  //   initialLoading = false;
 
-    tranports.addAll(newTransports);
-    initialLoading = false;
-
-    notifyListeners();
-  }
+  //   notifyListeners();
+  // }
 
   Future<void> uploadTransport() async {
 

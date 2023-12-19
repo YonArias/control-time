@@ -17,10 +17,7 @@ import 'package:flutter/foundation.dart'
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
-      throw UnsupportedError(
-        'DefaultFirebaseOptions have not been configured for web - '
-        'you can reconfigure this by running the FlutterFire CLI again.',
-      );
+      return web;
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
@@ -52,11 +49,23 @@ class DefaultFirebaseOptions {
     }
   }
 
+  static const FirebaseOptions web = FirebaseOptions(
+    apiKey: 'AIzaSyDuZsCCQrBeBnySR3rQs-AXr8OI4i2rgiI',
+    appId: '1:96212872871:web:93ace9d288e64722a87582',
+    messagingSenderId: '96212872871',
+    projectId: 'control-time-app-3ddc9',
+    authDomain: 'control-time-app-3ddc9.firebaseapp.com',
+    databaseURL: 'https://control-time-app-3ddc9-default-rtdb.firebaseio.com',
+    storageBucket: 'control-time-app-3ddc9.appspot.com',
+    measurementId: 'G-BNHMXPY622',
+  );
+
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyBv5_7IjjR63aLTyoV4gzqS-bc2IE2SH6Q',
     appId: '1:96212872871:android:928c05ba2c7ce1a2a87582',
     messagingSenderId: '96212872871',
     projectId: 'control-time-app-3ddc9',
+    databaseURL: 'https://control-time-app-3ddc9-default-rtdb.firebaseio.com',
     storageBucket: 'control-time-app-3ddc9.appspot.com',
   );
 }

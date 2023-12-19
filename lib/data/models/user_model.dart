@@ -1,44 +1,41 @@
 import 'package:time_control_app/domain/entities/user.dart';
 
 class UserModel {
+  //final String id;
   final String name;
   final String lastname;
   final String rol;
   final String gmail;
-  final String phone;
+  final bool isActive;
   final bool isValidate;
 
   UserModel({
+    //required this.id,
     required this.name,
     required this.lastname,
     required this.rol,
     required this.gmail,
-    required this.phone,
+    required this.isActive,
     required this.isValidate,
   });
 
-  factory UserModel.fromJsonMap(Map<String, dynamic> json) => UserModel(
-        name: json['name'] ?? 'No name',
+  factory UserModel.fromJasonMap(Map<String, dynamic> json) => UserModel(
+        //id: json['id'],
+        name: json['name'],
         lastname: json['lastname'],
         rol: json['rol'],
         gmail: json['gmail'],
-        phone: json['phone'],
+        isActive: json['isActive'],
         isValidate: json['isValidate'],
       );
 
-  User toTranportEntity() => User(
+  User toUserEntity() => User(
+        //id: id,
         name: name,
-        rol: lastname,
+        lastname: lastname,
+        rol: rol,
         gmail: gmail,
-        phone: phone,
+        isActive: isActive,
         isValidate: isValidate,
       );
-
-  Map<String, dynamic> toJson() => {
-    'name': name,
-    'rol': lastname,
-    'gmail': gmail,
-    'phone': phone,
-    'isValidate': isValidate,
-  };
 }

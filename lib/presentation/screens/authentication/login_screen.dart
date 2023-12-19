@@ -1,136 +1,151 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:provider/provider.dart';
-import 'package:social_login_buttons/social_login_buttons.dart';
-import 'package:google_sign_in/google_sign_in.dart';
+import 'package:time_control_app/domain/services/auth_service.dart';
 import 'package:time_control_app/presentation/providers/user_provider.dart';
+import 'package:time_control_app/presentation/screens/web/web_home_screen.dart';
+import 'package:time_control_app/presentation/widgets/custom_inputs/text_input.dart';
 
-class LoginScreen extends StatefulWidget {
+class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  Widget build(BuildContext context) {
+    final pantalla = MediaQuery.of(context).size.width;
+
+    if (pantalla >= 1270.0) {
+      return const WebHomeScreen();
+    } else {
+      return Scaffold(
+        body: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: SingleChildScrollView(
+            child: Center(
+              child: Column(
+                children: [
+                  // Image Logo
+                  Image.asset(
+                    'assets/image/logo-pormientras.png',
+                    height: 300,
+                  ),
+                  const Text(
+                    'Inicia session',
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  ),
+                  const SizedBox(height: 30),
+
+                  // ** Formulario **
+                  const _FormLogin(),
+
+                  const SizedBox(height: 20),
+
+                  const Padding(
+                    padding: EdgeInsets.all(50.0),
+                    child: Text(
+                        'Controla tus tiempos, no pierdas ningun segundo bro',
+                        textAlign: TextAlign.center),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      );
+    }
+  }
 }
 
-class _LoginScreenState extends State<LoginScreen> {
-  List<String> opciones = ['ADMIN', 'OPERARIO', 'JEFE'];
-  late String opcion;
+class _FormLogin extends StatefulWidget {
+  const _FormLogin({super.key});
+
+  @override
+  State<_FormLogin> createState() => __FormLoginState();
+}
+
+class __FormLoginState extends State<_FormLogin> {
+  // Creando controladores del formulario
+  late TextEditingController emailController;
+  late TextEditingController passwordController;
+
   @override
   void initState() {
-    opcion = 'OPERARIO';
+    emailController = TextEditingController(text: '');
+    passwordController = TextEditingController(text: '');
     super.initState();
   }
 
   @override
-  Widget build(BuildContext context) {
-    final userProvider = context.watch<UserProvider>();
-
-    return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: Center(
-          child: Column(
-            children: [
-              // Image Logo
-              Image.asset(
-                'assets/image/logo-pormientras.png',
-                height: 350,
-              ),
-              const Text(
-                'Inicia session',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-              ),
-              const Text(
-                'Conectate con tu cuenta google unica vez',
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-
-              // SELECCIONAR ROL
-              DropdownButtonFormField(
-                items: opciones
-                    .map((e) => DropdownMenuItem(value: e, child: Text(e)))
-                    .toList(),
-                onChanged: (value) {
-                  setState(() {
-                    opcion = value.toString();
-                  });
-                },
-                decoration: const InputDecoration(label: Text('Tipo de ROL')),
-              ),
-
-              const SizedBox(
-                height: 30,
-              ),
-
-              SocialLoginButton(
-                buttonType: SocialLoginButtonType.google,
-                onPressed: () async {
-                  final firestore = FirebaseFirestore.instance;
-                  FirebaseAuth auth = FirebaseAuth.instance;
-                  // TODO: AUTHENTIFICAR PARA GOOGLE FIREBASE
-                  UserCredential credentialUser = await signInWithGoogle();
-
-                  // Creamos el usuario
-                  if (credentialUser.additionalUserInfo!.isNewUser) {
-                    firestore.collection('user').add({
-                      'name': credentialUser.user!.displayName,
-                      'rol': opcion,
-                      'gmail': credentialUser.user!.email,
-                      'phone': credentialUser.user!.phoneNumber ?? 0,
-                      'isValidate': false,
-                    });
-                  } else {
-                     if (await userProvider.ValidarIngreso(
-                      credentialUser.user!.email)) {
-                      context.goNamed('home');
-                    } else {
-                      auth.signOut();
-                  }
-                  }
-
-                 
-                  // await signInWithGoogle();
-                  // context.goNamed('home');
-                },
-                borderRadius: 50,
-              ),
-
-              const SizedBox(
-                height: 50,
-              ),
-
-              const Padding(
-                padding: EdgeInsets.all(50.0),
-                child: Text(
-                    'Controla tus tiempos, no pierdas ningun segundo bro',
-                    textAlign: TextAlign.center),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    emailController.dispose();
+    passwordController.dispose();
   }
 
-  Future<UserCredential> signInWithGoogle() async {
-    // Activar el flujo de autenticación
-    final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+  @override
+  Widget build(BuildContext context) {
+    return Form(
+        child: Column(
+      children: [
+        // Relleno de formulario
 
-    // Obtener los detalles de autenticación de la solicitud
-    final GoogleSignInAuthentication? googleAuth =
-        await googleUser?.authentication;
+        TextInput(
+          controller: emailController,
+          label: 'Username',
+          icon: Icons.person,
+        ),
+        const SizedBox(
+          height: 10,
+        ),
+        TextInput(
+          controller: passwordController,
+          label: 'Password',
+          icon: Icons.lock_clock_rounded,
+          hive: true,
+        ),
 
-    // Crea una nueva credencial
-    final credential = GoogleAuthProvider.credential(
-      accessToken: googleAuth?.accessToken,
-      idToken: googleAuth?.idToken,
+        const SizedBox(
+          height: 20,
+        ),
+
+        _LoginAccess(
+          email: emailController.text,
+          password: passwordController.text,
+        ),
+
+        const SizedBox(
+          height: 10,
+        ),
+
+        ElevatedButton(
+            onPressed: () {
+              context.go('/register');
+            },
+            child: const Text('Registrase')),
+      ],
+    ));
+  }
+}
+
+class _LoginAccess extends ConsumerWidget {
+  final String email;
+  final String password;
+
+  const _LoginAccess({super.key, required this.email, required this.password});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final updateUseActivity = ref.watch(updateUserActivityProvider);
+
+    return ElevatedButton(
+      onPressed: () async {
+        final String? id = await loguearEmailAndPassword(email, password);
+
+        updateUseActivity.updateUserActivity(id!, true);
+
+        context.go('/home');
+      },
+      child: const Text('ACCEDER'),
     );
-
-    // Una vez que haya iniciado sesión, devuelva la credencial de usuario
-    return await FirebaseAuth.instance.signInWithCredential(credential);
   }
 }

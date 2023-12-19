@@ -9,20 +9,20 @@ class HistoricalView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Container(
-          color: Theme.of(context).colorScheme.inversePrimary,
-          height: 70,
-          child: Row(
-            children: [
-              Image.asset(
-                  'assets/image/logo-pormientras.png'), // TODO: cambiar la imagen segun lo escogido
-
-              InkWell(
-                child: const Text('ZOT-576'),
-                onTap: () => context.goNamed('selectVehicle'),
-              ),
-            ],
+        InkWell(
+          child: Container(
+            color: Theme.of(context).colorScheme.inversePrimary,
+            height: 70,
+            child: Row(
+              children: [
+                Image.asset(
+                    'assets/image/logo-pormientras.png'), // TODO: cambiar la imagen segun lo escogido
+        
+                Text('ZOT-576'),
+              ],
+            ),
           ),
+          onTap: () => context.goNamed('selectVehicle'),
         ),
 
         // Lista

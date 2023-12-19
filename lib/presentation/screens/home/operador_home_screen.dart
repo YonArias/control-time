@@ -47,7 +47,7 @@ class _OperadorHomeScreenState extends State<OperadorHomeScreen> {
         ],
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,
-        selectedItemColor: Colors.amber,
+        selectedItemColor: Theme.of(context).colorScheme.primary,
       ),
       
       // APPBAR
@@ -58,7 +58,7 @@ class _OperadorHomeScreenState extends State<OperadorHomeScreen> {
             borderRadius: BorderRadius.circular(20),
             onTap: ()=>context.goNamed('profile'),
             child: CircleAvatar(
-              backgroundImage: NetworkImage(user?.photoURL ?? ''),
+              
             ),
           ),
           const SizedBox(width: 20,),

@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:time_control_app/presentation/providers/chronometer_provider.dart';
 
 class RecordatorioView extends StatelessWidget {
   const RecordatorioView({super.key});
@@ -17,11 +15,11 @@ class RecordatorioView extends StatelessWidget {
             borderRadius: BorderRadius.circular(10),
             color: Theme.of(context).colorScheme.primary,
           ),
-          child: Text(
-            context
-                .select((ChronometerProvider chronometer) => chronometer.time),
-            style: const TextStyle(fontSize: 42, color: Colors.white),
-          ),
+          // child: Text(
+          //   context
+          //       .select((ChronometerProvider chronometer) => chronometer.time),
+          //   style: const TextStyle(fontSize: 42, color: Colors.white),
+          // ),
         ),
         const SizedBox(
           height: 30,
@@ -48,7 +46,7 @@ class _ControlTime extends StatelessWidget {
           ),
           onPressed: () {
             // Inicia el tiempo
-            context.read<ChronometerProvider>().startStopTimer();
+            // context.read<ChronometerProvider>().startStopTimer();
           },
         ),
         const SizedBox(
@@ -61,7 +59,7 @@ class _ControlTime extends StatelessWidget {
           ),
           onPressed: () {
             // Para el tiempo
-            context.read<ChronometerProvider>().startStopTimer();
+            // context.read<ChronometerProvider>().startStopTimer();
           },
         ),
         const SizedBox(
@@ -73,7 +71,7 @@ class _ControlTime extends StatelessWidget {
             size: 42,
           ),
           onPressed: () {
-            context.read<ChronometerProvider>().restart();
+            // context.read<ChronometerProvider>().restart();
           },
         ),
       ],
