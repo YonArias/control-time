@@ -141,9 +141,11 @@ class _LoginAccess extends ConsumerWidget {
       onPressed: () async {
         final String? id = await loguearEmailAndPassword(email, password);
 
-        updateUseActivity.updateUserActivity(id!, true);
+        if (id != null) {
+          updateUseActivity.updateUserActivity(id, true);
 
-        context.go('/home');
+          context.go('/home');
+        }
       },
       child: const Text('ACCEDER'),
     );
