@@ -57,7 +57,8 @@ class _SupervisorHomeScreenState extends State<SupervisorHomeScreen> {
           InkWell(
             borderRadius: BorderRadius.circular(20),
             onTap: ()=>context.goNamed('profile'),
-            child: CircleAvatar(
+            child: const CircleAvatar(
+              child: Icon(Icons.person_2_outlined),
               // backgroundImage: NetworkImage(user?.photoURL ?? ''),
             ),
           ),

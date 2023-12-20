@@ -23,7 +23,7 @@ class TileSelected extends StatelessWidget {
         trailing: const Icon(Icons.arrow_forward_ios_outlined),
         contentPadding: const EdgeInsets.all(15.0),
       ),
-      onTap: () => context.go(url),
+      onTap: () => context.push(url),
     );
   }
 }

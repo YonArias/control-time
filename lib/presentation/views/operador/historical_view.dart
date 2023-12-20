@@ -22,7 +22,7 @@ class HistoricalView extends StatelessWidget {
               ],
             ),
           ),
-          onTap: () => context.goNamed('selectVehicle'),
+          onTap: () => context.push('/home/selectVehicle'),
         ),
 
         // Lista

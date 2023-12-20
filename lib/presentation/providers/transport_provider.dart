@@ -1,21 +1,25 @@
-import 'package:flutter/foundation.dart';
-import 'package:time_control_app/data/models/transport_model.dart';
 
-class TransportProvider extends ChangeNotifier {
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:time_control_app/data/datasources/transport_remote_datasource_impl.dart';
+import 'package:time_control_app/data/repository/transport_repository_impl.dart';
+import 'package:time_control_app/domain/usecases/transports_usercases.dart';
 
-  bool initialLoading = true;
-  List<Transport> tranports = [];
+final transportDatasourceProvider =
+    Provider<TransportRemoteDatasourceImpl>((ref) => TransportRemoteDatasourceImpl());
 
-  // Future<void> loadTransport() async {
-  //   final newTransports = Transport(name: 'name', type: 'type', placa: 'placa', ntank: 3, capacityTank: 3, fuel: 'fuel', available: true);
+final transportRepositoryProvider =
+    Provider<TransportRepositoryImpl>((ref) => TransportRepositoryImpl(
+          remoteDataSource: ref.read(transportDatasourceProvider),
+        ));
 
-  //   tranports.addAll(newTransports as Iterable<Transport>);
-  //   initialLoading = false;
+// Obtengo todos los vehiculos
+final getTransportsProvider =
+    Provider<GetTransportUseCase>((ref) => GetTransportUseCase(
+      transportRepository: ref.read(transportRepositoryProvider),
+    ));
 
-  //   notifyListeners();
-  // }
-
-  Future<void> uploadTransport() async {
-
-  }
-}
+// Obtenemos los vehiculos libres
+final getTransportsFreeProvider =
+    Provider<GetTransportFreeUseCase>((ref) => GetTransportFreeUseCase(
+      transportRepository: ref.read(transportRepositoryProvider),
+    ));

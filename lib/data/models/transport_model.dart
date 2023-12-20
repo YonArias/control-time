@@ -1,28 +1,50 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:time_control_app/domain/entities/transport.dart';
 
-class Transport {
-  final String id;
+class TransportModel {
+  // final String id;
   final String name; // nombre del vehiculo
-  final String mark; // marca
-  final String model;
-  final String placa; // modelo
-  final int age; // a;os
-  final int ntank; // numero de tanques
-  final double capacityTank;
-  final String fuel; // combustible
-  final bool active;
-  //final List<Task> tasks; // esta en activo?
+  final String placa;
+  final int carga;
+  final String state;
+  final String type;
+  final String photoUrl;
+  final String description;
+  final Timestamp createDate;
 
-  Transport(
-      {required this.id,
-      required this.name,
-      required this.mark,
-      required this.model,
-      required this.placa,
-      required this.age,
-      required this.ntank,
-      required this.capacityTank,
-      required this.fuel,
-      required this.active,
-      //required this.tasks
-    });
+  TransportModel({
+    // required this.id,
+    required this.name,
+    required this.placa,
+    required this.carga,
+    required this.state,
+    required this.type,
+    required this.photoUrl,
+    required this.description,
+    required this.createDate,
+  });
+
+  factory TransportModel.fromJasonMap(Map<String, dynamic> json) => TransportModel(
+        name: json['name'],
+        placa: json['placa'],
+        carga: json['carga'],
+        state: json['state'],
+        type: json['type'],
+        photoUrl: json['photoUrl'],
+        description: json['description'],
+        createDate: json['createDate'],
+      );
+
+  Transport toUserEntity() => Transport(
+        //id: id,
+        name: name,
+        placa: placa,
+        carga: carga,
+        state: state,
+        type: type,
+        photoUrl: photoUrl,
+        description: description,
+        createDate: createDate,
+      );
+
 }

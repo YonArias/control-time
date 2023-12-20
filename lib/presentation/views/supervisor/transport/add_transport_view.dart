@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:time_control_app/domain/services/select_image.dart';
 import 'package:time_control_app/presentation/widgets/custom_inputs/text_input.dart';
 import 'package:time_control_app/presentation/widgets/custom_inputs/upload_image.dart';
@@ -14,10 +13,6 @@ class AddTransportView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new_outlined),
-          onPressed: () => context.go('/supervisor'),
-        ),
         title: const Text('Transportes'),
         centerTitle: true,
       ),
@@ -58,12 +53,8 @@ class __FormAddTransportState extends State<_FormAddTransport> {
   // Controladores
   late TextEditingController nameController;
   late TextEditingController placaController;
-  late TextEditingController markController;
-  late TextEditingController modelController;
-  late TextEditingController ageController;
-  late TextEditingController fuelController;
-  late TextEditingController ntankController;
-  late TextEditingController capacityController;
+  late TextEditingController descriptionController;
+  late TextEditingController typeController;
 
   // Para capturar la imagen
   File? imagen_to_upload;
@@ -72,13 +63,9 @@ class __FormAddTransportState extends State<_FormAddTransport> {
   void initState() {
     // TODO: implement initState
     placaController = TextEditingController(text: '');
-    markController = TextEditingController(text: '');
-    modelController = TextEditingController(text: '');
     nameController = TextEditingController(text: '');
-    ageController = TextEditingController(text: '');
-    fuelController = TextEditingController(text: '');
-    ntankController = TextEditingController(text: '');
-    capacityController = TextEditingController(text: '');
+    typeController = TextEditingController(text: '');
+    descriptionController = TextEditingController(text: '');
     super.initState();
   }
 
@@ -86,13 +73,9 @@ class __FormAddTransportState extends State<_FormAddTransport> {
   void dispose() {
     // TODO: implement dispose
     placaController.dispose();
-    markController.dispose();
-    modelController.dispose();
     nameController.dispose();
-    ageController.dispose();
-    fuelController.dispose();
-    ntankController.dispose();
-    capacityController.dispose();
+    descriptionController.dispose();
+    typeController.dispose();
     super.dispose();
   }
 
@@ -120,35 +103,40 @@ class __FormAddTransportState extends State<_FormAddTransport> {
               ),
 
               // Nombre
-              const TextInput(
+              TextInput(
                 label: 'Nombre del transporte',
                 icon: Icons.airport_shuttle_outlined,
+                controller: nameController,
               ),
               const SizedBox(
                 height: 10,
               ),
-              const TextInput(
+              TextInput(
                 label: 'Tipo de transporte',
                 icon: Icons.call_to_action_outlined,
+                controller: typeController,
               ),
               const SizedBox(
                 height: 10,
               ),
-              const TextInput(
+              TextInput(
                 label: 'Placa',
                 icon: Icons.call_to_action_outlined,
+                controller: placaController,
               ),
               const SizedBox(
                 height: 10,
               ),
-              const TextInput(
+              TextInput(
                 label: 'Descripcion',
                 icon: Icons.call_to_action_outlined,
+                controller: descriptionController,
               ),
               const SizedBox(
                 height: 10,
               ),
-              // Subir imagen
+              // Subir imagen 
+              // ! No se esta guardando exactamente
               UploadImage(
                 ontap: () async {
                   final image = await getImage();

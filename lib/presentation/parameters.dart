@@ -6,8 +6,8 @@ enum Combustible {
 }
 
 enum StateTransport {
-  ACTIVE,
-  AWAIT,
-  INNACTIVE,
-  AVAILABLE,
+  ACTIVE, // En proceso
+  AWAIT, // En espera
+  INNACTIVE, // Sin funcion
+  AVAILABLE, // Listo para escoger
 }
