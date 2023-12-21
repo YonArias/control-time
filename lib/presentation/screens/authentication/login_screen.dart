@@ -76,10 +76,10 @@ class __FormLoginState extends State<_FormLogin> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
-    super.dispose();
     emailController.dispose();
     passwordController.dispose();
+    // TODO: implement dispose
+    super.dispose();
   }
 
   @override
@@ -109,8 +109,8 @@ class __FormLoginState extends State<_FormLogin> {
         ),
 
         _LoginAccess(
-          email: emailController.text,
-          password: passwordController.text,
+          email: emailController,
+          password: passwordController,
         ),
 
         const SizedBox(
@@ -128,8 +128,8 @@ class __FormLoginState extends State<_FormLogin> {
 }
 
 class _LoginAccess extends ConsumerWidget {
-  final String email;
-  final String password;
+  final TextEditingController email;
+  final TextEditingController password;
 
   const _LoginAccess({super.key, required this.email, required this.password});
 
@@ -139,7 +139,7 @@ class _LoginAccess extends ConsumerWidget {
 
     return ElevatedButton(
       onPressed: () async {
-        final String? id = await loguearEmailAndPassword(email, password);
+        final String? id = await loguearEmailAndPassword(email.text, password.text);
 
         if (id != null) {
           updateUseActivity.updateUserActivity(id, true);
