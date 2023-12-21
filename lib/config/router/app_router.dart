@@ -1,7 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:go_router/go_router.dart';
 import 'package:time_control_app/presentation/screens/authentication/register_screen.dart';
-import 'package:time_control_app/presentation/screens/home/operador_home_screen.dart';
+import 'package:time_control_app/presentation/screens/home/operador/control_time_screen.dart';
+import 'package:time_control_app/presentation/screens/home/operador/operador_home_screen.dart';
 import 'package:time_control_app/presentation/screens/home/supervisor_home_screen.dart';
 import 'package:time_control_app/presentation/screens/mobility/select_mobility_screen.dart';
 import 'package:time_control_app/presentation/screens/profile/profile_user_screen.dart';
@@ -37,9 +38,9 @@ final appRouter = GoRouter(
       builder: (context, state) => const OperadorHomeScreen(),
     ),
     GoRoute(
-      name: 'supervisorHome',
-      path: '/supervisor',
-      builder: (context, state) => const SupervisorHomeScreen(),
+      name: 'controlTime',
+      path: '/operador/controlTime',
+      builder: (context, state) => const ControlTimeScreen(),
     ),
     GoRoute(
       name: 'profile',
@@ -52,6 +53,11 @@ final appRouter = GoRouter(
       builder: (context, state) => const SelectMobilityScreen(),
     ),
     // Agregar recursos
+    GoRoute(
+      name: 'supervisorHome',
+      path: '/supervisor',
+      builder: (context, state) => const SupervisorHomeScreen(),
+    ),
     GoRoute(
       name: 'addTransport',
       path: '/supervisor/addTransport',
