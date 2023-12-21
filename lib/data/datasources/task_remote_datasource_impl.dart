@@ -36,4 +36,13 @@ class TaskRemoteDatasourceImpl implements TaskDatasource {
       throw Exception('La tarea con ID $idTask no existe.');
     }
   }
+  
+  @override
+  Stream<List<TaskDone>> getTasksDoneUser(String idUser) {
+    return firestore.collection('doneTasks').where('idUser', isEqualTo: idUser).snapshots().map((querySnapshot) {
+      return querySnapshot.docs.map((doc) {
+        return TaskDoneModel.fromJsonMap(doc.data()).toUserEntity();
+      }).toList();
+    });
+  }
 }

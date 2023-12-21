@@ -1,4 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:time_control_app/data/models/delay_model.dart';
+import 'package:time_control_app/domain/entities/delay.dart';
 import 'package:time_control_app/domain/entities/task.dart';
 
 // Tareas hechas
@@ -11,20 +13,28 @@ class TaskDoneModel {
   final int duration;
   final String idUser;
   final String idTransport;
-  // final List<Delays> delays;
+  final List<DelayDone>? delays;
 
-  TaskDoneModel({
-    required this.id,
-    required this.title,
-    required this.description,
-    required this.startTime,
-    required this.endTime,
-    required this.duration,
-    required this.idUser,
-    required this.idTransport,
-  });
+  TaskDoneModel(
+      {required this.id,
+      required this.title,
+      required this.description,
+      required this.startTime,
+      required this.endTime,
+      required this.duration,
+      required this.idUser,
+      required this.idTransport,
+      this.delays});
 
-  factory TaskDoneModel.fromJsonMap(Map<String, dynamic> json) => TaskDoneModel(
+  factory TaskDoneModel.fromJsonMap(Map<String, dynamic> json) {
+    List<dynamic>? delaysJson = json['delays'];
+    List<DelayDone>? delaysList = delaysJson != null
+        ? delaysJson
+            .map((delayMap) => DelayDoneModel.fromJsonMap(delayMap).toUserEntity())
+            .toList()
+        : null;
+
+    return TaskDoneModel(
         id: json['id'],
         title: json['title'],
         description: json['description'],
@@ -33,7 +43,9 @@ class TaskDoneModel {
         duration: json['duration'],
         idUser: json['idUser'],
         idTransport: json['idTransport'],
-      );
+        // Pasar delays
+        delays: delaysList);
+  }
 
   TaskDone toUserEntity() => TaskDone(
         id: id,
@@ -44,6 +56,7 @@ class TaskDoneModel {
         duration: duration,
         idUser: idUser,
         idTransport: idTransport,
+        delays: delays,
       );
 }
 

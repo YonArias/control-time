@@ -3,6 +3,10 @@ import 'package:time_control_app/data/datasources/user_remote_datasource_impl.da
 import 'package:time_control_app/data/repository/user_repository_impl.dart';
 import 'package:time_control_app/domain/usecases/users_usecases.dart';
 
+final idUser = StateProvider<String?>(
+  (ref) => '',
+);
+
 final userDatasourceProvider =
     Provider<UserRemoteDatasourceImpl>((ref) => UserRemoteDatasourceImpl());
 

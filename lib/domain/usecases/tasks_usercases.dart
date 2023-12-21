@@ -21,6 +21,16 @@ class GetTaskDoneUseCase {
   }
 }
 
+class GetTaskDoneUserUseCase {
+  final TaskRepository taskRepository;
+
+  GetTaskDoneUserUseCase({required this.taskRepository});
+
+  Stream<List<TaskDone>> getTaskDoneUser(String idUser) {
+    return taskRepository.getTasksDoneUser(idUser);
+  }
+}
+
 class GetTaskUseCase {
   final TaskRepository taskRepository;
 

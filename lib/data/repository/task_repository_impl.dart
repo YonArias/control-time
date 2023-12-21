@@ -21,4 +21,9 @@ class TaskRepositoryImpl implements TaskRepository {
   Future<Task> getTask(String idTask) {
     return remoteDatasource.getTask(idTask);
   }
+
+  @override
+  Stream<List<TaskDone>> getTasksDoneUser(String idUser) {
+    return remoteDatasource.getTasksDoneUser(idUser);
+  }
 }

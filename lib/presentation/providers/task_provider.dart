@@ -29,3 +29,8 @@ final getTaskProvider =
     Provider<GetTaskUseCase>((ref) => GetTaskUseCase(
           taskRepository: ref.read(taskRepositoryProvider),
         ));
+
+final getTaskDoneUserProvider =
+    Provider<GetTaskDoneUserUseCase>((ref) => GetTaskDoneUserUseCase(
+          taskRepository: ref.read(taskRepositoryProvider),
+        ));

@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:time_control_app/domain/entities/delay.dart';
 
 // Tareas hechas
 class TaskDone {
@@ -10,6 +11,7 @@ class TaskDone {
   final int duration;
   final String idUser;
   final String idTransport;
+  final List<DelayDone>? delays;
 
   TaskDone({
     required this.id,
@@ -20,6 +22,7 @@ class TaskDone {
     required this.duration,
     required this.idUser,
     required this.idTransport,
+    this.delays,
   });
 }
 

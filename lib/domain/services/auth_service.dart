@@ -4,8 +4,28 @@ import 'package:firebase_auth/firebase_auth.dart';
 final firebase = FirebaseFirestore.instance;
 FirebaseAuth auth = FirebaseAuth.instance;
 
-Future<String?> loguearEmailAndPassword(String email, String password) async {
+Future<String?> getId() async {
   String? id;
+  String? email = auth.currentUser!.email;
+
+  QuerySnapshot<Map<String, dynamic>> querySnapshot =
+      await firebase.collection('user').where('gmail', isEqualTo: email).get();
+
+  if (querySnapshot.docs.isNotEmpty) {
+    // Itera sobre los documentos resultantes (puede haber más de uno si hay varios usuarios con el mismo correo)
+    for (QueryDocumentSnapshot<Map<String, dynamic>> document
+        in querySnapshot.docs) {
+      if (document.data()['isValidate']) {
+        id = document.id;
+      } else {
+        logoutUser();
+      }
+    }
+  }
+  return id;
+}
+
+Future<String?> loguearEmailAndPassword(String email, String password) async {
   try {
     // Ya me logueo con esta linea
     await FirebaseAuth.instance.signInWithEmailAndPassword(
@@ -13,23 +33,7 @@ Future<String?> loguearEmailAndPassword(String email, String password) async {
       password: password,
     );
 
-    QuerySnapshot<Map<String, dynamic>> querySnapshot = await firebase
-        .collection('user')
-        .where('gmail', isEqualTo: email)
-        .get();
-
-    if (querySnapshot.docs.isNotEmpty) {
-      // Itera sobre los documentos resultantes (puede haber más de uno si hay varios usuarios con el mismo correo)
-      for (QueryDocumentSnapshot<Map<String, dynamic>> document
-          in querySnapshot.docs) {
-        if (document.data()['isValidate']) {
-          id = document.id;
-        } else {
-          logoutUser();
-        }
-      }
-    }
-    return id;
+    return getId();
   } catch (e) {
     print("Error al iniciar sesión con correo y contraseña: $e");
     return null;
