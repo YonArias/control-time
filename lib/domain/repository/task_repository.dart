@@ -6,4 +6,6 @@ abstract class TaskRepository {
   Stream<List<TaskDone>> getTasksDoneUser(String idUser);
 
   Future<Task> getTask(String idTask);
+  Future<void> addTask(Task task);
+  Future<void> deleteTask(String idTask);
 }

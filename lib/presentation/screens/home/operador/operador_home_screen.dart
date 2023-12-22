@@ -109,7 +109,7 @@ class _ListTaskWidget extends ConsumerWidget {
     final getTasks = ref.watch(getTasksProvider);
 
     return StreamBuilder<List<Task>>(
-      stream: getTasks.getTask(),
+      stream: getTasks.getTasks(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Center(child: CircularProgressIndicator());

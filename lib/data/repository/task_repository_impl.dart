@@ -26,4 +26,14 @@ class TaskRepositoryImpl implements TaskRepository {
   Stream<List<TaskDone>> getTasksDoneUser(String idUser) {
     return remoteDatasource.getTasksDoneUser(idUser);
   }
+
+  @override
+  Future<void> addTask(Task task) async {
+    await remoteDatasource.addTask(task);
+  }
+
+  @override
+  Future<void> deleteTask(String idTask) async {
+    await remoteDatasource.deleteTask(idTask);
+  }
 }

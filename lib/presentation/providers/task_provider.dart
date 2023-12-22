@@ -34,3 +34,11 @@ final getTaskDoneUserProvider =
     Provider<GetTaskDoneUserUseCase>((ref) => GetTaskDoneUserUseCase(
           taskRepository: ref.read(taskRepositoryProvider),
         ));
+// Agregar Task
+final addTaskProvider = Provider<AddTaskUseCase>((ref) => AddTaskUseCase(
+      taskRepository: ref.read(taskRepositoryProvider),
+    ));
+// Eliminar Task
+final deleteTaskProvider = Provider<DeleteTaskUseCase>((ref) => DeleteTaskUseCase(
+      taskRepository: ref.read(taskRepositoryProvider),
+    ));

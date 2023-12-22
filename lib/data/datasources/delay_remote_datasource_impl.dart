@@ -31,7 +31,6 @@ class DelayRemoteDatasourceImpl implements DelayDatasource {
     );
     // Accede al ID del nuevo documento
     String docId = docRef.id;
-    print('Documento añadido con ID: $docId');
     // Actualiza el documento con su propio ID en un campo específico
     await docRef.update({
       'id': docId,

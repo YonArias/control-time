@@ -20,7 +20,7 @@ final getDelaysProvider = Provider<GetDelaysUseCase>((ref) => GetDelaysUseCase(
 final addDelayProvider = Provider<AddDelayUseCase>((ref) => AddDelayUseCase(
       delayRepository: ref.read(delayRepositoryProvider),
     ));
-
+// Eliminar Delay
 final deleteDelayProvider = Provider<DeleteDelayUseCase>((ref) => DeleteDelayUseCase(
       delayRepository: ref.read(delayRepositoryProvider),
     ));

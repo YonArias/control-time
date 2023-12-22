@@ -6,7 +6,7 @@ class GetTasksUseCase {
 
   GetTasksUseCase({required this.taskRepository});
 
-  Stream<List<Task>> getTask() {
+  Stream<List<Task>> getTasks() {
     return taskRepository.getTasks();
   }
 }
@@ -38,5 +38,25 @@ class GetTaskUseCase {
 
   Future<Task> getTask(String idTask) {
     return taskRepository.getTask(idTask);
+  }
+}
+
+class AddTaskUseCase {
+  final TaskRepository taskRepository;
+
+  AddTaskUseCase({required this.taskRepository});
+
+  Future<void> addTask(Task task) async {
+    await taskRepository.addTask(task);
+  }
+}
+
+class DeleteTaskUseCase {
+  final TaskRepository taskRepository;
+
+  DeleteTaskUseCase({required this.taskRepository});
+
+  Future<void> deleteDelay(String idTask) async {
+    await taskRepository.deleteTask(idTask);
   }
 }
