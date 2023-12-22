@@ -14,7 +14,7 @@ class AddResourcesView extends StatelessWidget {
             icon: Icons.airport_shuttle_rounded, 
             title: 'Agregar transporte', 
             url: '/supervisor/addTransport',
-            color: Colors.red,
+            color: Colors.green,
           ),
           Divider(),
           TileSelected(
@@ -22,6 +22,13 @@ class AddResourcesView extends StatelessWidget {
             title: 'Agregar tareas', 
             url: '/supervisor/addTask',
             color: Colors.blue,
+          ),
+          Divider(),
+          TileSelected(
+            icon: Icons.access_alarm, 
+            title: 'Agregar demoras',
+            url: '/supervisor/addDelay',
+            color: Colors.red,
           ),
           Divider(),
         ],

@@ -2,7 +2,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:time_control_app/data/datasources/transport_remote_datasource_impl.dart';
 import 'package:time_control_app/data/repository/transport_repository_impl.dart';
-import 'package:time_control_app/domain/usecases/transports_usercases.dart';
+import 'package:time_control_app/domain/usecases/transports_usecases.dart';
 
 final transportDatasourceProvider =
     Provider<TransportRemoteDatasourceImpl>((ref) => TransportRemoteDatasourceImpl());

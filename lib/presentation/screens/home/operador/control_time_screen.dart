@@ -94,6 +94,7 @@ class _ControllerButtons extends StatefulWidget {
 
 class __ControllerButtonsState extends State<_ControllerButtons> {
   bool isActive = false;
+  bool isDelay = false;
 
   @override
   Widget build(BuildContext context) {
@@ -104,15 +105,17 @@ class __ControllerButtonsState extends State<_ControllerButtons> {
         ),
         // Botones controlador
 
-        if (!isActive)
+        if (!isActive && !isDelay)
           ControllerButtonWidget(
             icon: Icons.play_arrow,
             name: 'INICIAR',
             color: Colors.blue,
             dark: true,
             ontap: () {
-              // TODO: GUARDAR INICIO DE CRONOMETRO
-              // TODO: Iniciar cronometro
+              // TODO: CREAR LA TAREA
+              // ? title, description, id, idTransport, idUser, startTime
+
+              // TODO: INICIO DE CRONOMETRO
               setState(() {
                 isActive = true;
               });
@@ -121,27 +124,26 @@ class __ControllerButtonsState extends State<_ControllerButtons> {
         if (isActive)
           Column(
             children: [
-              // CircleButtonWidget(
-              //   icon: Icons.pause,
-              //   color: Colors.red
-              // ),
-              // CircleButtonWidget(
-              //   icon: Icons.check,
-              //   color: Colors.green
-              // ),
               ControllerButtonWidget(
                 icon: Icons.alarm_add,
                 name: 'DEMORA',
                 color: Colors.red,
                 dark: true,
                 ontap: () {
+                  // TODO: DETENER CRONOMETRO
+
                   // TODO: APARECER DEMORAS
 
-                  // TODO: Agregar demora
+                  // TODO: AGREAGAR UNA DEMORA
+                  // ? title, description, id, startTime
 
                   // TODO: INICIAR CRONOMETRO DE DEMORA
 
-                  // TODO: PARA EL CRONOMETRO DE PRINCIPAL
+                  // TODO: CAMBIAR EL BOTON
+                  setState(() {
+                    isDelay = true;
+                    isActive = false;
+                  });
                 },
               ),
               const SizedBox(
@@ -154,13 +156,37 @@ class __ControllerButtonsState extends State<_ControllerButtons> {
                 dark: true,
                 ontap: () {
                   // TODO: ASIGNAR LA HORA DE TERMINO
+                  // ? endTIme, duration
+
+                  // TODO: ACABAR TODO
 
                   // TODO: REDIRECCIONAR AL MENU
                   context.go('/operador');
                 },
               ),
             ],
-          )
+          ),
+        if (isDelay)
+          ControllerButtonWidget(
+            icon: Icons.alarm_off_outlined,
+            name: 'ACABAR',
+            color: Colors.blue,
+            dark: true,
+            ontap: () {
+              // TODO: DETENER CRONOMETRO DEMORA
+
+              // TODO: AGREAGAR ATRIBUTOS A DEMORAS
+              // ? endTIme, duration
+
+              // TODO: CONTINUAR CRONOMETRO PRINCIPAL
+
+              // TODO: CAMBIAR EL BOTONES
+              setState(() {
+                isDelay = false;
+                isActive = true;
+              });
+            },
+          ),
       ],
     );
   }

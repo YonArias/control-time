@@ -3,11 +3,12 @@ import 'package:go_router/go_router.dart';
 import 'package:time_control_app/presentation/screens/authentication/register_screen.dart';
 import 'package:time_control_app/presentation/screens/home/operador/control_time_screen.dart';
 import 'package:time_control_app/presentation/screens/home/operador/operador_home_screen.dart';
-import 'package:time_control_app/presentation/screens/home/supervisor_home_screen.dart';
+import 'package:time_control_app/presentation/screens/home/supervisor/supervisor_home_screen.dart';
 import 'package:time_control_app/presentation/screens/mobility/select_mobility_screen.dart';
 import 'package:time_control_app/presentation/screens/profile/profile_user_screen.dart';
 import 'package:time_control_app/presentation/screens/screens.dart';
 import 'package:time_control_app/presentation/screens/web/web_home_screen.dart';
+import 'package:time_control_app/presentation/views/supervisor/delay/add_delay_view.dart';
 import 'package:time_control_app/presentation/views/supervisor/task/add_task_view.dart';
 import 'package:time_control_app/presentation/views/supervisor/transport/add_transport_view.dart';
 
@@ -67,6 +68,11 @@ final appRouter = GoRouter(
       name: 'addTask',
       path: '/supervisor/addTask',
       builder: (context, state) => const AddTaskView(),
+    ),
+    GoRoute(
+      name: 'addDelay',
+      path: '/supervisor/addDelay',
+      builder: (context, state) => const AddDelayView(),
     ),
 
     // SCREEN PARA WEB

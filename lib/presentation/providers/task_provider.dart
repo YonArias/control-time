@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:time_control_app/data/datasources/task_remote_datasource_impl.dart';
 import 'package:time_control_app/data/repository/task_repository_impl.dart';
-import 'package:time_control_app/domain/usecases/tasks_usercases.dart';
+import 'package:time_control_app/domain/usecases/tasks_usecases.dart';
 
 final selectTask = StateProvider<String>(
   (ref) => '',

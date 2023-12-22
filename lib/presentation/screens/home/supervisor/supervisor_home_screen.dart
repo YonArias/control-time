@@ -13,10 +13,8 @@ class SupervisorHomeScreen extends StatefulWidget {
 class _SupervisorHomeScreenState extends State<SupervisorHomeScreen> {
   int _selectedIndex = 0;
   static const List<Widget> _widgetOptions = [
-    // UserListWidget(getUsersUseCase: UserRepository(remoteDataSource)),
-    // UserListWidget(),
     UserListWidget(),
-    AddResourcesView(),
+    UserListWidget(),
     AddResourcesView(),
   ];
 

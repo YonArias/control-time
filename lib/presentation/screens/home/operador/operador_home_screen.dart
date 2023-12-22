@@ -125,19 +125,22 @@ class _ListTaskWidget extends ConsumerWidget {
             itemBuilder: (context, index) {
               return Card(
                 margin:
-                    const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                 color:
                     Colors.red[100], // Theme.of(context).colorScheme.secondary,
 
-                child: ListTile(
-                  title: Text(tasks[index].title),
-                  // Add more UI components as needed
-                  subtitle: Text(tasks[index].description),
-                  onTap: () {
-                    ref.read(selectTask.notifier).state = tasks[index].id;
-
-                    context.push('/operador/controlTime');
-                  },
+                child: Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: ListTile(
+                    title: Text(tasks[index].title),
+                    // Add more UI components as needed
+                    subtitle: Text(tasks[index].description),
+                    onTap: () {
+                      ref.read(selectTask.notifier).state = tasks[index].id;
+                
+                      context.push('/operador/controlTime');
+                    },
+                  ),
                 ),
               );
             },

@@ -52,7 +52,7 @@ class _ListTimes extends ConsumerWidget {
         } else if (snapshot.hasError) {
           return Text('Error: ${snapshot.error}');
         } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-          return const Text('No Users available.');
+          return const Icon(Icons.auto_awesome_mosaic);
         } else {
           List<TaskDone> taskDone = snapshot.data!;
           // Build your UI using the tasks data
@@ -60,9 +60,9 @@ class _ListTimes extends ConsumerWidget {
             itemCount: taskDone.length,
             itemBuilder: (context, index) {
               return Card(
-                margin: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+                margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
+                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
