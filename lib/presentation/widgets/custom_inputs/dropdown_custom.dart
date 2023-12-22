@@ -24,7 +24,7 @@ class _DropdownCustomState extends State<DropdownCustom> {
         borderSide: BorderSide(color: theme.primary));
 
     return SizedBox(
-      height: 50,
+      height: 60,
       child: DropdownButtonFormField(
         items: widget.opciones
             .map((e) => DropdownMenuItem(value: e, child: Text(e)))

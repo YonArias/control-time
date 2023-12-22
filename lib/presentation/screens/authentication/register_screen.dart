@@ -1,7 +1,11 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:time_control_app/data/models/user_model.dart';
+import 'package:time_control_app/presentation/providers/user_provider.dart';
+import 'package:time_control_app/presentation/widgets/custom_inputs/dropdown_custom.dart';
+import 'package:time_control_app/presentation/widgets/custom_inputs/text_input.dart';
 
 class RegisterScreen extends StatelessWidget {
   const RegisterScreen({super.key});
@@ -15,15 +19,18 @@ class RegisterScreen extends StatelessWidget {
             children: [
               Image.asset(
                 'assets/image/logo-pormientras.png',
-                height: 350,
+                height: 300,
               ),
               const Text(
                 'Registrarse',
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
-
+              SizedBox(height: 15,),
               // Formulario
-              const _FormRegister(),
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 10),
+                child: _FormRegister(),
+              ),
             ],
           ),
         ),
@@ -76,74 +83,51 @@ class __FormRegisterState extends State<_FormRegister> {
       child: Column(
         children: [
           // Nombre
-          TextFormField(
+          TextInput(
+            label: 'Nombres',
             controller: nameController,
-            decoration: const InputDecoration(label: Text('Nombres')),
+            icon: Icons.person,
+            // validator: 'Ingresa tu nombre',
           ),
+          const SizedBox(height: 10,),
           // Apellido
-          TextFormField(
+          TextInput(
+            label: 'Apellidos',
             controller: lastnameController,
-            decoration: const InputDecoration(label: Text('Apellidos')),
+            icon: Icons.person_2_outlined,
+            // validator: 'Ingresa tu apellido',
           ),
+          const SizedBox(height: 10,),
           // Correo electronico
-          TextFormField(
+          TextInput(
+            label: 'Correo electronico',
             controller: gmailController,
-            decoration:
-                const InputDecoration(label: Text('Correo electronico')),
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return 'Correo obligatorio';
-              }
-              return null;
-            },
+            icon: Icons.email,
+            // validator: 'example@example.com',
           ),
-
+          const SizedBox(height: 10,),
           // Rol
-          DropdownButtonFormField(
-            items: opciones
-                .map((e) => DropdownMenuItem(value: e, child: Text(e)))
-                .toList(),
-            onChanged: (value) {
-              setState(() {
-                opcion = value.toString();
-              });
-            },
-            decoration: const InputDecoration(label: Text('Tipo de ROL')),
+          DropdownCustom(
+            label: 'Rol de usuario',
+            opciones: opciones,
+            icon: Icons.badge,
           ),
-
-          // Telefono
-          TextFormField(
+          const SizedBox(height: 10,),
+          // Password
+          TextInput(
+            label: 'Contraseña',
             controller: passwordController,
-            decoration: const InputDecoration(label: Text('Password')),
+            icon: Icons.remove_red_eye_sharp,
           ),
-
+          const SizedBox(height: 20,),
           // BUTTON
-          ElevatedButton(
-            onPressed: () async {
-              if (_formkey.currentState!.validate()) {
-                FirebaseAuth auth = FirebaseAuth.instance;
-                final firebase = FirebaseFirestore.instance;
-
-                await auth.createUserWithEmailAndPassword(
-                  email: gmailController.text,
-                  password: passwordController.text,
-                );
-
-                firebase.collection('user').doc().set({
-                  'name': nameController.text,
-                  'lastname': lastnameController.text,
-                  'gmail': gmailController.text,
-                  'rol': opcion,
-                  'active': false,
-                  'isValidate': false
-                });
-
-                auth.signOut();
-
-                context.goNamed('main');
-              }
-            },
-            child: const Text('Registrar'),
+          _UserButton(
+            validado: _formkey.currentState?.validate(),
+            name: nameController,
+            lastname: lastnameController,
+            rol: opcion,
+            gmail: gmailController,
+            password: passwordController,
           ),
 
           ElevatedButton(
@@ -152,6 +136,56 @@ class __FormRegisterState extends State<_FormRegister> {
           ),
         ],
       ),
+    );
+  }
+}
+
+class _UserButton extends ConsumerWidget {
+  const _UserButton({super.key,
+  required this.validado,
+  required this.name,
+  required this.lastname,
+  required this.rol,
+  required this.gmail,
+  required this.password
+  });
+
+  final bool? validado;
+  final TextEditingController name;
+  final TextEditingController lastname;
+  final String rol;
+  final TextEditingController gmail;
+  final TextEditingController password;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return ElevatedButton(
+      onPressed: () async {
+        if (validado != null && validado == true) {
+          FirebaseAuth auth = FirebaseAuth.instance;
+
+          await auth.createUserWithEmailAndPassword(
+            email: gmail.text,
+            password: password.text,
+          );
+
+          ref.read(addUserProvider).addUser(UserModel(
+                id: '',
+                name: name.text,
+                lastname: lastname.text,
+                rol: rol,
+                gmail: gmail.text,
+                isActive: false,
+                isValidate: false,
+              ).toUserEntity()
+              );
+
+          auth.signOut();
+
+          context.goNamed('main');
+        }
+      },
+      child: const Text('Registrar'),
     );
   }
 }

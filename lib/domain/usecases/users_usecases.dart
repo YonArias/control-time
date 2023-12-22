@@ -2,6 +2,7 @@
 import 'package:time_control_app/domain/entities/user.dart';
 import 'package:time_control_app/domain/repository/user_repository.dart';
 
+// ** MUESTRA TODOS LOS USUARIOS
 class GetUsersUseCase {
   final UserRepository userRepository;
 
@@ -11,13 +12,43 @@ class GetUsersUseCase {
     return userRepository.getUsers();
   }
 }
-
-class UpdateUsersUseCase {
+// ** ACTUALIZA LA ACTIVIDAD DE USUARIO
+class UpdateUsersActivityUseCase {
   final UserRepository userRepository;
 
-  UpdateUsersUseCase({required this.userRepository});
+  UpdateUsersActivityUseCase({required this.userRepository});
 
   Future<void> updateUserActivity(String userId, bool isActive) async {
     await userRepository.updateUserActivity(userId, isActive);
+  }
+}
+// ** MUESTRA OPERARIOS
+class GetUsersOperarioUseCase {
+  final UserRepository userRepository;
+
+  GetUsersOperarioUseCase({required this.userRepository});
+
+  Stream<List<User>> getUsersOperario() {
+    return userRepository.getUsersOperario();
+  }
+}
+// ** ACTUALIZAR USUARIO
+class UpdateUserUseCase {
+  final UserRepository userRepository;
+
+  UpdateUserUseCase({required this.userRepository});
+
+  Future<void> updateUser( User user ) async {
+    await userRepository.updateUser(user);
+  }
+}
+// ** AGREGAR USUARIO
+class AddUserUseCase {
+  final UserRepository userRepository;
+
+  AddUserUseCase({required this.userRepository});
+
+  Future<void> addUser(User user) async {
+    await userRepository.addUser(user);
   }
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:time_control_app/presentation/views/supervisor/add_resources_view.dart';
+import 'package:time_control_app/presentation/views/supervisor/historical/historical_supervisor_view.dart';
 import 'package:time_control_app/presentation/views/supervisor/user/user_view.dart';
 
 class SupervisorHomeScreen extends StatefulWidget {
@@ -13,7 +14,7 @@ class SupervisorHomeScreen extends StatefulWidget {
 class _SupervisorHomeScreenState extends State<SupervisorHomeScreen> {
   int _selectedIndex = 0;
   static const List<Widget> _widgetOptions = [
-    UserListWidget(),
+    HistoricalSupervisorView(),
     UserListWidget(),
     AddResourcesView(),
   ];

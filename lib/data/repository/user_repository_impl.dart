@@ -7,14 +7,29 @@ class UserRepositoryImpl implements UserRepository {
   final UserRemoteDatasourceImpl remoteDataSource;
 
   UserRepositoryImpl({required this.remoteDataSource});
-  
+
   @override
   Stream<List<User>> getUsers() {
     return remoteDataSource.getUsers();
   }
-  
+
   @override
   Future<void> updateUserActivity(String userId, bool isActive) async {
     await remoteDataSource.updateUserActivity(userId, isActive);
+  }
+
+  @override
+  Stream<List<User>> getUsersOperario() {
+    return remoteDataSource.getUsersOperario();
+  }
+  
+  @override
+  Future<void> addUser(User user) async {
+    await remoteDataSource.addUser(user);
+  }
+
+  @override
+  Future<void> updateUser(User user) async {
+    await remoteDataSource.updateUser(user);
   }
 }

@@ -1,7 +1,7 @@
 import 'package:time_control_app/domain/entities/user.dart';
 
 class UserModel {
-  //final String id;
+  final String id;
   final String name;
   final String lastname;
   final String rol;
@@ -10,7 +10,7 @@ class UserModel {
   final bool isValidate;
 
   UserModel({
-    //required this.id,
+    required this.id,
     required this.name,
     required this.lastname,
     required this.rol,
@@ -20,7 +20,7 @@ class UserModel {
   });
 
   factory UserModel.fromJasonMap(Map<String, dynamic> json) => UserModel(
-        //id: json['id'],
+        id: json['id'],
         name: json['name'],
         lastname: json['lastname'],
         rol: json['rol'],
@@ -30,7 +30,7 @@ class UserModel {
       );
 
   User toUserEntity() => User(
-        //id: id,
+        id: id,
         name: name,
         lastname: lastname,
         rol: rol,
@@ -38,4 +38,14 @@ class UserModel {
         isActive: isActive,
         isValidate: isValidate,
       );
+
+  Map<String, dynamic> toUserJson() => {
+    'id': id,
+    'name': name,
+    'lastname': lastname,
+    'rol': rol,
+    'gmail': gmail,
+    'isActive': isActive,
+    'isValidate': isValidate,
+  };
 }

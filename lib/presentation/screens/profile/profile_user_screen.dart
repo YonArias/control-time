@@ -11,6 +11,7 @@ class ProfileUserScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final user = FirebaseAuth.instance.currentUser;
     return Scaffold(
       // appBar: AppBar(),
       body: Column(
@@ -24,7 +25,6 @@ class ProfileUserScreen extends StatelessWidget {
             child: IconButton(
               icon: const Icon(Icons.arrow_back_ios_new_outlined),
               onPressed: () async {
-                final user = FirebaseAuth.instance.currentUser;
                 if (await isOperador(user!.email)) {
                   context.push('/operador');
                 } else {
@@ -33,10 +33,21 @@ class ProfileUserScreen extends StatelessWidget {
               },
             ),
           ),
-          // Perfil
-          // ProfileUser(user: user),
+          
+          Card(
+            child: Container(
+              width: MediaQuery.of(context).size.width-50,
+              height: MediaQuery.of(context).size.width-50,
+              padding: const EdgeInsets.all(150.0),
+              child: const CircularProgressIndicator()
+            ),
+          ),
+          const SizedBox(height: 10,),
 
-          // Button para logout
+          Text(user!.email ?? '', style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),),
+
+          const SizedBox(height: 20,),
+
           const _LogoutButton(),
         ],
       ),

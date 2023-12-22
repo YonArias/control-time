@@ -8,11 +8,10 @@ class UserListWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final getUsers = ref.watch(getUsersOperarioProvider);
 
-    final getUsers = ref.watch(getUsersProvider);
-    
     return StreamBuilder<List<User>>(
-      stream: getUsers.getUsers(),
+      stream: getUsers.getUsersOperario(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Center(child: CircularProgressIndicator());
@@ -26,13 +25,35 @@ class UserListWidget extends ConsumerWidget {
           return ListView.builder(
             itemCount: users.length,
             itemBuilder: (context, index) {
-              return ListTile(
-                title: Text(users[index].name),
-                // Add more UI components as needed
-                trailing: Icon(
-                  Icons.brightness_1,
-                  color: users[index].isActive ? Colors.green : Colors.red,
-                ),
+              return Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20,vertical: 15),
+                    child: ListTile(
+                        leading: Icon(
+                          Icons.person,
+                          color: users[index].isActive ? Colors.green : Colors.red,
+                          size: 30,
+                        ),
+                        title: Center(
+                            child: Text(
+                                '${users[index].name} ${users[index].lastname}')),
+                        // Add more UI components as needed
+                        trailing: Switch(
+                            value: users[index].isValidate,
+                            onChanged: (value) {
+                              ref.read(updateUserProvider).updateUser(User(
+                                  id: users[index].id,
+                                  name: users[index].name,
+                                  lastname: users[index].lastname,
+                                  rol: users[index].rol,
+                                  gmail: users[index].gmail,
+                                  isActive: users[index].isActive,
+                                  isValidate: value));
+                            })),
+                  ),
+                          const Divider(),
+                ],
               );
             },
           );

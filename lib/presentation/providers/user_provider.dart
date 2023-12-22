@@ -15,14 +15,30 @@ final userRepositoryProvider =
           remoteDataSource: ref.read(userDatasourceProvider),
         ));
 
-// Caso de uso
-final getUsersProvider =
-    Provider<GetUsersUseCase>((ref) => GetUsersUseCase(
+// ** MUESTRA TODOS LOS USUARIOS
+final getUsersProvider = Provider<GetUsersUseCase>((ref) => GetUsersUseCase(
       userRepository: ref.read(userRepositoryProvider),
     ));
 
-// ** ACTUALIZAR USER
-final updateUserActivityProvider = Provider<UpdateUsersUseCase>((ref) {
+// ** MUESTRA OPERARIO
+final getUsersOperarioProvider = Provider<GetUsersOperarioUseCase>((ref) => GetUsersOperarioUseCase(
+      userRepository: ref.read(userRepositoryProvider),
+    ));
+
+// ** ACTUALIZAR USER ACtividad
+final updateUserActivityProvider = Provider<UpdateUsersActivityUseCase>((ref) {
   final userRepository = ref.read(userRepositoryProvider);
-  return UpdateUsersUseCase(userRepository: userRepository);
+  return UpdateUsersActivityUseCase(userRepository: userRepository);
+});
+
+// ** ACTUALIZAR USER
+final updateUserProvider = Provider<UpdateUserUseCase>((ref) {
+  final userRepository = ref.read(userRepositoryProvider);
+  return UpdateUserUseCase(userRepository: userRepository);
+});
+
+// ** CREAR USER
+final addUserProvider = Provider<AddUserUseCase>((ref) {
+  final userRepository = ref.read(userRepositoryProvider);
+  return AddUserUseCase(userRepository: userRepository);
 });

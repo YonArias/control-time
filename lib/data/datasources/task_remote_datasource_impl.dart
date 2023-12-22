@@ -39,10 +39,14 @@ class TaskRemoteDatasourceImpl implements TaskDatasource {
   
   @override
   Stream<List<TaskDone>> getTasksDoneUser(String idUser) {
-    Timestamp today = Timestamp.now();
+    DateTime today = DateTime.now();
+    Timestamp inicioDelDia = Timestamp.fromDate(DateTime(today.year, today.month, today.day));
+    Timestamp finDelDia = Timestamp.fromDate(DateTime(today.year, today.month, today.day, 23, 59, 59, 999));
+    
     return firestore.collection('doneTasks')
       .where('idUser', isEqualTo: idUser)
-      .where('startTime', isLessThan: today )
+      .where('startTime', isGreaterThanOrEqualTo: inicioDelDia)
+      .where('startTime', isLessThanOrEqualTo: finDelDia)
       .snapshots().map((querySnapshot) {
         return querySnapshot.docs.map((doc) {
           return TaskDoneModel.fromJsonMap(doc.data()).toTaskEntity();

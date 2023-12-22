@@ -1,5 +1,5 @@
 class User {
-  //final String id;
+  final String id;
   final String name;
   final String lastname;
   final String rol;
@@ -8,7 +8,7 @@ class User {
   final bool isValidate;
 
   User({
-    //required this.id,
+    required this.id,
     required this.name,
     required this.lastname,
     required this.rol,

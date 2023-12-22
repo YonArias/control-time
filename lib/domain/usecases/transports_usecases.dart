@@ -21,7 +21,7 @@ class GetTransportFreeUseCase {
   }
 }
 
-// Agregar
+// ** Agregar
 class AddTransportUseCase {
   final TransportRepository transportRepository;
 
@@ -31,7 +31,7 @@ class AddTransportUseCase {
     await transportRepository.addTransport(transport);
   }
 }
-// Eliminar
+// ** Eliminar
 class DeleteTransportUseCase {
   final TransportRepository transportRepository;
 
