@@ -22,4 +22,14 @@ class TransportRepositoryImpl implements TransportRepository {
     // TODO: implement setTransport
     throw UnimplementedError();
   }
+
+  @override
+  Future<void> addTransport(Transport transport) async {
+    await remoteDataSource.addTransport(transport);
+  }
+
+  @override
+  Future<void> deleteTransport(String idTransport) async {
+    await remoteDataSource.deleteTransport(idTransport);
+  }
 }

@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:time_control_app/data/models/delay_model.dart';
 import 'package:time_control_app/data/models/task_model.dart';
 import 'package:time_control_app/domain/datasources/task_datasource.dart';
 import 'package:time_control_app/domain/entities/task.dart';
@@ -11,7 +10,7 @@ class TaskRemoteDatasourceImpl implements TaskDatasource {
   Stream<List<Task>> getTasks() {
     return firestore.collection('tasks').snapshots().map((querySnapshot) {
       return querySnapshot.docs.map((doc) {
-        return TaskModel.fromJsonMap(doc.data()).toUserEntity();
+        return TaskModel.fromJsonMap(doc.data()).toTaskEntity();
       }).toList();
     });
   }
@@ -30,7 +29,7 @@ class TaskRemoteDatasourceImpl implements TaskDatasource {
     if (taskSnapshot.exists) {
       // El documento existe, puedes acceder a los datos y crear un objeto Task
       Map<String, dynamic> data = taskSnapshot.data()!;
-      Task task = TaskModel.fromJsonMap(data).toUserEntity(); // Asumiendo que tienes un constructor fromMap en la clase Task
+      Task task = TaskModel.fromJsonMap(data).toTaskEntity(); // Asumiendo que tienes un constructor fromMap en la clase Task
       return task;
     } else {
       // El documento no existe
@@ -46,7 +45,7 @@ class TaskRemoteDatasourceImpl implements TaskDatasource {
       .where('startTime', isLessThan: today )
       .snapshots().map((querySnapshot) {
         return querySnapshot.docs.map((doc) {
-          return TaskDoneModel.fromJsonMap(doc.data()).toUserEntity();
+          return TaskDoneModel.fromJsonMap(doc.data()).toTaskEntity();
         }).toList();
       });
   }
@@ -56,12 +55,12 @@ class TaskRemoteDatasourceImpl implements TaskDatasource {
     // Obtén la colección en la que deseas añadir el documento
     CollectionReference collection = FirebaseFirestore.instance.collection('tasks');
     // Añade un nuevo documento y obtén su referencia
-    DocumentReference docRef = await collection.add(DelayModel(
+    DocumentReference docRef = await collection.add(TaskModel(
       id: task.id, 
       title: task.title, 
       description: task.description, 
       createDate: task.createDate
-    ).toDelayJson()
+    ).toTaskJson()
     );
     // Accede al ID del nuevo documento
     String docId = docRef.id;

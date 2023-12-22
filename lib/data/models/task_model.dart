@@ -47,7 +47,7 @@ class TaskDoneModel {
         delays: delaysList);
   }
 
-  TaskDone toUserEntity() => TaskDone(
+  TaskDone toTaskEntity() => TaskDone(
         id: id,
         title: title,
         description: description,
@@ -81,10 +81,17 @@ class TaskModel {
         createDate: json['createDate'],
       );
 
-  Task toUserEntity() => Task(
+  Task toTaskEntity() => Task(
         id: id,
         title: title,
         description: description,
         createDate: createDate,
       );
+
+  Map<String, dynamic> toTaskJson() => {
+        'id': id,
+        'title': title,
+        'description': description,
+        'createDate': createDate,
+      };
 }

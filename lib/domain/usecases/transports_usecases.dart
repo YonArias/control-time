@@ -20,3 +20,24 @@ class GetTransportFreeUseCase {
     return transportRepository.getTransportsFree();
   }
 }
+
+// Agregar
+class AddTransportUseCase {
+  final TransportRepository transportRepository;
+
+  AddTransportUseCase({required this.transportRepository});
+
+  Future<void> addTransport(Transport transport) async {
+    await transportRepository.addTransport(transport);
+  }
+}
+// Eliminar
+class DeleteTransportUseCase {
+  final TransportRepository transportRepository;
+
+  DeleteTransportUseCase({required this.transportRepository});
+
+  Future<void> deleteTransport(String idTransport) async {
+    await transportRepository.deleteTransport(idTransport);
+  }
+}

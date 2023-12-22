@@ -13,7 +13,7 @@ class AddDelayView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Lista de demoras'),
+        title: const Text('Demoras'),
       ),
       body: const _ListDelays(),
       floatingActionButton: FloatingActionButton(

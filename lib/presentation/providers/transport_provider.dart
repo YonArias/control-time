@@ -23,3 +23,12 @@ final getTransportsFreeProvider =
     Provider<GetTransportFreeUseCase>((ref) => GetTransportFreeUseCase(
       transportRepository: ref.read(transportRepositoryProvider),
     ));
+
+// Agregar Transport
+final addTransportProvider = Provider<AddTransportUseCase>((ref) => AddTransportUseCase(
+      transportRepository: ref.read(transportRepositoryProvider),
+    ));
+// Eliminar Transport
+final deleteTransportProvider = Provider<DeleteTransportUseCase>((ref) => DeleteTransportUseCase(
+      transportRepository: ref.read(transportRepositoryProvider),
+    ));

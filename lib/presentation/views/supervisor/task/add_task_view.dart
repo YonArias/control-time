@@ -13,7 +13,7 @@ class AddTaskView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Lista de tareas'),
+        title: const Text('Tareas'),
       ),
       body: const _ListTask(),
       floatingActionButton: FloatingActionButton(
@@ -184,7 +184,7 @@ class _ListTask extends ConsumerWidget {
                           context: context,
                           builder: (context) => AlertDialog(
                             content:
-                                Text('Seguro que desea eliminar esta demora?'),
+                                Text('Seguro que desea eliminar esta tarea?'),
                             actions: [
                               ElevatedButton(
                                   onPressed: () {

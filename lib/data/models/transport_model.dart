@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:time_control_app/domain/entities/transport.dart';
 
 class TransportModel {
-  // final String id;
+  final String id;
   final String name; // nombre del vehiculo
   final String placa;
   final int carga;
@@ -13,7 +13,7 @@ class TransportModel {
   final Timestamp createDate;
 
   TransportModel({
-    // required this.id,
+    required this.id,
     required this.name,
     required this.placa,
     required this.carga,
@@ -25,6 +25,7 @@ class TransportModel {
   });
 
   factory TransportModel.fromJasonMap(Map<String, dynamic> json) => TransportModel(
+        id: json['id'],
         name: json['name'],
         placa: json['placa'],
         carga: json['carga'],
@@ -35,8 +36,8 @@ class TransportModel {
         createDate: json['createDate'],
       );
 
-  Transport toUserEntity() => Transport(
-        //id: id,
+  Transport toTransportEntity() => Transport(
+        id: id,
         name: name,
         placa: placa,
         carga: carga,
@@ -46,5 +47,15 @@ class TransportModel {
         description: description,
         createDate: createDate,
       );
-
+  Map<String, dynamic> toTransportJson() => {
+        'id': id,
+        'name': name,
+        'placa': placa,
+        'carga': carga,
+        'state': state,
+        'type': type,
+        'photoUrl': photoUrl,
+        'description': description,
+        'createDate': createDate
+      };
 }
