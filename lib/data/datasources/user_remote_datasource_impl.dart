@@ -2,9 +2,33 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:time_control_app/data/models/user_model.dart';
 import 'package:time_control_app/domain/datasources/user_datasource.dart';
 import 'package:time_control_app/domain/entities/user.dart';
+import 'package:time_control_app/domain/services/auth_service.dart';
 
 class UserRemoteDatasourceImpl implements UserDatasource {
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
+
+  @override
+  Future<User?> getUser() async {
+    User? user;
+    String? email = auth.currentUser!.email;
+
+    QuerySnapshot<Map<String, dynamic>> querySnapshot =
+        await firebase.collection('user').where('gmail', isEqualTo: email).get();
+
+    if (querySnapshot.docs.isNotEmpty) {
+      // Itera sobre los documentos resultantes (puede haber más de uno si hay varios usuarios con el mismo correo)
+      for (QueryDocumentSnapshot<Map<String, dynamic>> document
+          in querySnapshot.docs) {
+        if (document.data()['isValidate']) {
+          user = UserModel.fromJasonMap(document.data()).toUserEntity();
+        } else {
+          logoutUser();
+        }
+      }
+    }
+
+    return user;
+  }
 
   @override
   Stream<List<User>> getUsers() {

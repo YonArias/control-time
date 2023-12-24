@@ -1,7 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:time_control_app/domain/entities/task.dart';
+import 'package:time_control_app/presentation/providers/chronometer_provider.dart';
 import 'package:time_control_app/presentation/providers/task_provider.dart';
 import 'package:time_control_app/presentation/widgets/custom_buttons/controller_buttons.dart';
 
@@ -29,15 +31,24 @@ class ControlTimeScreen extends StatelessWidget {
       ),
       body: Container(
         padding: const EdgeInsets.only(top: 150, left: 20, right: 20),
-        child: const Column(
+        child: Column(
           children: [
-            _TitleTask(),
+            Consumer(
+              builder: (context, ref, child) {
+                final taskTime = ref.watch(taskTimeProvider);
+                return Card(
+                  child: ListTile(
+                    title: Center(child: Text(taskTime!.title)),
+                  ),
+                );
+              },
+            ),
 
-            SizedBox(
+            const SizedBox(
               height: 100,
             ),
             // Pantalla o animacion
-            Card(
+            const Card(
               margin: EdgeInsets.symmetric(horizontal: 80),
               child: Center(
                   child: Text(
@@ -50,37 +61,6 @@ class ControlTimeScreen extends StatelessWidget {
           ],
         ),
       ),
-    );
-  }
-}
-
-class _TitleTask extends ConsumerWidget {
-  const _TitleTask();
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final idTask = ref.watch(selectTask);
-    final getTask = ref.watch(getTaskProvider).getTask(idTask);
-
-    return FutureBuilder(
-      future: getTask,
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Center(child: CircularProgressIndicator());
-        } else if (snapshot.hasError) {
-          return Text('Error: ${snapshot.error}');
-        } else if (!snapshot.hasData || snapshot.data == null) {
-          return const Text('No data available.');
-        } else {
-          Task task = snapshot.data!;
-          // Ahora puedes acceder a los atributos de la tarea
-          return Card(
-            child: ListTile(
-              title: Center(child: Text(task.title)),
-            ),
-          );
-        }
-      },
     );
   }
 }
@@ -106,20 +86,37 @@ class __ControllerButtonsState extends State<_ControllerButtons> {
         // Botones controlador
 
         if (!isActive && !isDelay)
-          ControllerButtonWidget(
-            icon: Icons.play_arrow,
-            name: 'INICIAR',
-            color: Colors.blue,
-            dark: true,
-            ontap: () {
-              // TODO: CREAR LA TAREA
-              // ? title, description, id, idTransport, idUser, startTime
+          Consumer(
+            builder: (context, ref, child) => ControllerButtonWidget(
+              icon: Icons.play_arrow,
+              name: 'INICIAR',
+              color: Colors.blue,
+              dark: true,
+              ontap: () {
+                final taskTime = ref.read(taskTimeProvider);
+                final userTime = ref.read(userTimeProvider);
+                final transportTime = ref.read(transportTimeProvider);
 
-              // TODO: INICIO DE CRONOMETRO
-              setState(() {
-                isActive = true;
-              });
-            },
+                ref.read(addTaskDoneProvider).addTaskDone(TaskDone(
+                    id: '',
+                    title: taskTime!.title,
+                    description: taskTime.description,
+                    startTime: Timestamp.now(),
+                    endTime: Timestamp.now(),
+                    duration: 0,
+                    user: userTime,
+                    transport: transportTime,
+                    delays: null
+                  ));
+                // TODO: CREAR LA TAREA
+                // ? title, description, id, idTransport, idUser, startTime
+
+                // TODO: INICIO DE CRONOMETRO
+                setState(() {
+                  isActive = true;
+                });
+              },
+            ),
           ),
         if (isActive)
           Column(

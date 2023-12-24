@@ -1,82 +1,87 @@
-import 'dart:async';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
-//? import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:time_control_app/domain/entities/task.dart';
+import 'package:time_control_app/domain/entities/transport.dart';
+import 'package:time_control_app/domain/entities/user.dart';
 
-class ChronometerProvider extends ChangeNotifier {
-  int _time = 0;
-  bool isRunning = false;
-  List<String> laps = [];
+final userTimeProvider = StateProvider<User?>((ref) => null);
+final transportTimeProvider = StateProvider<Transport?>((ref) => null);
+final taskTimeProvider = StateProvider<Task?>((ref) => null);
 
-  // Inicializamos la instancia del registro
-  FirebaseFirestore firestore = FirebaseFirestore.instance;
-  late CollectionReference registertimes = firestore.collection('times');
 
-  // TODO: APRENDER MAS SOBRE SHARED PREFERENCES
-  // Future<void> cargarDatos() async {
-  //   final SharedPreferences prefs = await SharedPreferences.getInstance();;
-  //   final List<String>? newlaps = prefs.getStringList('laps');
-  //   laps = newlaps ?? [];
-  //   print('Se cargaron los datos $laps');
-  //   notifyListeners();
-  // }
+// class ChronometerProvider extends ChangeNotifier {
+//   int _time = 0;
+//   bool isRunning = false;
+//   List<String> laps = [];
 
-  // Future<void> guardarDatos() async {
-  //   final SharedPreferences prefs = await SharedPreferences.getInstance();;
-  //   prefs.setStringList('laps', laps);
-  //   print('Guardando el array ${prefs.getStringList('laps')}');
-  // }
+//   // Inicializamos la instancia del registro
+//   FirebaseFirestore firestore = FirebaseFirestore.instance;
+//   late CollectionReference registertimes = firestore.collection('times');
 
-  StreamSubscription<int>? _timeSucription;
+//   // TODO: APRENDER MAS SOBRE SHARED PREFERENCES
+//   // Future<void> cargarDatos() async {
+//   //   final SharedPreferences prefs = await SharedPreferences.getInstance();;
+//   //   final List<String>? newlaps = prefs.getStringList('laps');
+//   //   laps = newlaps ?? [];
+//   //   print('Se cargaron los datos $laps');
+//   //   notifyListeners();
+//   // }
 
-  void startStopTimer() {
-    if (!isRunning) {
-      // ! Iniciar el cronometro
-      _startTimer();
-    } else {
-      // ! Parar el cronometro
-      _timeSucription?.pause();
-    }
-    isRunning = !isRunning;
-    notifyListeners();
-  }
+//   // Future<void> guardarDatos() async {
+//   //   final SharedPreferences prefs = await SharedPreferences.getInstance();;
+//   //   prefs.setStringList('laps', laps);
+//   //   print('Guardando el array ${prefs.getStringList('laps')}');
+//   // }
 
-  // Realizamos el conteo de los segundos
-  void _startTimer() {
-    // cancelamos la suscripcion
-    _timeSucription?.cancel();
-    // obtenemos suscripcion
-    _timeSucription =
-        Stream<int>.periodic(const Duration(seconds: 1), (value) => 1)
-            .listen((timeSeconds) {
-      _time += timeSeconds;
-      notifyListeners();
-    });
-  }
+//   StreamSubscription<int>? _timeSucription;
 
-  // Retornamos la hora en formato STRING
-  String get time {
-    final hours = ((_time / 3600) % 24).floor().toString().padLeft(2, '0');
-    final minutes = ((_time / 60) % 60).floor().toString().padLeft(2, '0');
-    final seconds = (_time % 60).floor().toString().padLeft(2, '0');
+//   void startStopTimer() {
+//     if (!isRunning) {
+//       // ! Iniciar el cronometro
+//       _startTimer();
+//     } else {
+//       // ! Parar el cronometro
+//       _timeSucription?.pause();
+//     }
+//     isRunning = !isRunning;
+//     notifyListeners();
+//   }
 
-    return '$hours:$minutes:$seconds';
-  }
+//   // Realizamos el conteo de los segundos
+//   void _startTimer() {
+//     // cancelamos la suscripcion
+//     _timeSucription?.cancel();
+//     // obtenemos suscripcion
+//     _timeSucription =
+//         Stream<int>.periodic(const Duration(seconds: 1), (value) => 1)
+//             .listen((timeSeconds) {
+//       _time += timeSeconds;
+//       notifyListeners();
+//     });
+//   }
 
-  // Finaliza el cronometro
-  void restart() {
-    laps.add(_time.toString());
-    // guardarDatos();
-    agregarTime(_time);
-    _time = 0;
-    _timeSucription?.pause();
-    _timeSucription?.cancel();
-    isRunning = false;
+//   // Retornamos la hora en formato STRING
+//   String get time {
+//     final hours = ((_time / 3600) % 24).floor().toString().padLeft(2, '0');
+//     final minutes = ((_time / 60) % 60).floor().toString().padLeft(2, '0');
+//     final seconds = (_time % 60).floor().toString().padLeft(2, '0');
 
-    notifyListeners();
-  }
+//     return '$hours:$minutes:$seconds';
+//   }
 
-  Future<void> agregarTime(int time) async {
-    await registertimes.add({'time': time});
-  }
-}
+//   // Finaliza el cronometro
+//   void restart() {
+//     laps.add(_time.toString());
+//     // guardarDatos();
+//     agregarTime(_time);
+//     _time = 0;
+//     _timeSucription?.pause();
+//     _timeSucription?.cancel();
+//     isRunning = false;
+
+//     notifyListeners();
+//   }
+
+//   Future<void> agregarTime(int time) async {
+//     await registertimes.add({'time': time});
+//   }
+// }

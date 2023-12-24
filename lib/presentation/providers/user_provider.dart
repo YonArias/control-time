@@ -15,6 +15,11 @@ final userRepositoryProvider =
           remoteDataSource: ref.read(userDatasourceProvider),
         ));
 
+// ** OBTENER USUARIO ACTUAL
+final getUserProvider = Provider<GetUserUseCase>((ref) => GetUserUseCase(
+      userRepository: ref.read(userRepositoryProvider),
+    ));
+
 // ** MUESTRA TODOS LOS USUARIOS
 final getUsersProvider = Provider<GetUsersUseCase>((ref) => GetUsersUseCase(
       userRepository: ref.read(userRepositoryProvider),

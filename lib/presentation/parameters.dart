@@ -11,3 +11,9 @@ enum StateTransport {
   INNACTIVE, // Sin funcion
   AVAILABLE, // Listo para escoger
 }
+
+List<String> rol = [
+  'OPERARIO',
+  'SUPERVISOR',
+  'ADMIN'
+];

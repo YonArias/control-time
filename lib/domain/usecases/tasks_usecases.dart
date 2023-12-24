@@ -11,26 +11,6 @@ class GetTasksUseCase {
   }
 }
 
-class GetTaskDoneUseCase {
-  final TaskRepository taskRepository;
-
-  GetTaskDoneUseCase({required this.taskRepository});
-
-  Stream<List<TaskDone>> getTaskDone() {
-    return taskRepository.getTasksDone();
-  }
-}
-
-class GetTaskDoneUserUseCase {
-  final TaskRepository taskRepository;
-
-  GetTaskDoneUserUseCase({required this.taskRepository});
-
-  Stream<List<TaskDone>> getTaskDoneUser(String idUser) {
-    return taskRepository.getTasksDoneUser(idUser);
-  }
-}
-
 class GetTaskUseCase {
   final TaskRepository taskRepository;
 
@@ -58,5 +38,36 @@ class DeleteTaskUseCase {
 
   Future<void> deleteDelay(String idTask) async {
     await taskRepository.deleteTask(idTask);
+  }
+}
+
+// TODO: TASK DONE
+class GetTaskDoneUseCase {
+  final TaskRepository taskRepository;
+
+  GetTaskDoneUseCase({required this.taskRepository});
+
+  Stream<List<TaskDone>> getTaskDone() {
+    return taskRepository.getTasksDone();
+  }
+}
+
+class GetTaskDoneUserUseCase {
+  final TaskRepository taskRepository;
+
+  GetTaskDoneUserUseCase({required this.taskRepository});
+
+  Stream<List<TaskDone>> getTaskDoneUser(String idUser) {
+    return taskRepository.getTasksDoneUser(idUser);
+  }
+}
+
+class AddTaskDoneUseCase {
+  final TaskRepository taskRepository;
+
+  AddTaskDoneUseCase({required this.taskRepository});
+
+  Future<void> addTaskDone(TaskDone taskDone) async {
+    return taskRepository.addTaskDone(taskDone);
   }
 }

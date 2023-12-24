@@ -16,12 +16,6 @@ class TaskRemoteDatasourceImpl implements TaskDatasource {
   }
 
   @override
-  Stream<List<TaskDone>> getTasksDone() {
-    // TODO: implement getTasksDone
-    throw UnimplementedError();
-  }
-
-  @override
   Future<Task> getTask(String idTask) async {
     DocumentSnapshot<Map<String, dynamic>> taskSnapshot =
       await firestore.collection('tasks').doc(idTask).get();
@@ -35,23 +29,6 @@ class TaskRemoteDatasourceImpl implements TaskDatasource {
       // El documento no existe
       throw Exception('La tarea con ID $idTask no existe.');
     }
-  }
-  
-  @override
-  Stream<List<TaskDone>> getTasksDoneUser(String idUser) {
-    DateTime today = DateTime.now();
-    Timestamp inicioDelDia = Timestamp.fromDate(DateTime(today.year, today.month, today.day));
-    Timestamp finDelDia = Timestamp.fromDate(DateTime(today.year, today.month, today.day, 23, 59, 59, 999));
-    
-    return firestore.collection('doneTasks')
-      .where('idUser', isEqualTo: idUser)
-      .where('startTime', isGreaterThanOrEqualTo: inicioDelDia)
-      .where('startTime', isLessThanOrEqualTo: finDelDia)
-      .snapshots().map((querySnapshot) {
-        return querySnapshot.docs.map((doc) {
-          return TaskDoneModel.fromJsonMap(doc.data()).toTaskEntity();
-        }).toList();
-      });
   }
   
   @override
@@ -81,5 +58,54 @@ class TaskRemoteDatasourceImpl implements TaskDatasource {
 
     // Elimina el documento
     await docRef.delete();
+  }
+
+  // TODO: TASKS DONE
+  @override
+  Stream<List<TaskDone>> getTasksDone() {
+    // TODO: implement getTasksDone
+    throw UnimplementedError();
+  }
+  
+  @override
+  Stream<List<TaskDone>> getTasksDoneUser(String idUser) {
+    DateTime today = DateTime.now();
+    Timestamp inicioDelDia = Timestamp.fromDate(DateTime(today.year, today.month, today.day));
+    Timestamp finDelDia = Timestamp.fromDate(DateTime(today.year, today.month, today.day, 23, 59, 59, 999));
+    
+    return firestore.collection('doneTasks')
+      .where('idUser', isEqualTo: idUser)
+      .where('startTime', isGreaterThanOrEqualTo: inicioDelDia)
+      .where('startTime', isLessThanOrEqualTo: finDelDia)
+      .snapshots().map((querySnapshot) {
+        return querySnapshot.docs.map((doc) {
+          return TaskDoneModel.fromJsonMap(doc.data()).toTaskEntity();
+        }).toList();
+      });
+  }
+  
+  @override
+  Future<void> addTaskDone(TaskDone taskDone) async {
+    // Obtén la colección en la que deseas añadir el documento
+    CollectionReference collection = FirebaseFirestore.instance
+        .collection('doneTasks'); // ! Corregir por plural
+    // Añade un nuevo documento y obtén su referencia
+    DocumentReference docRef = await collection.add(TaskDoneModel(
+      id: taskDone.id,
+      title: taskDone.title,
+      description: taskDone.description,
+      startTime: taskDone.startTime,
+      endTime: taskDone.endTime,
+      duration: taskDone.duration,
+      user: taskDone.user,
+      transport: taskDone.transport,
+      delays: taskDone.delays,
+    ).toTaskDoneJson());
+    // Accede al ID del nuevo documento
+    String docId = docRef.id;
+    // Actualiza el documento con su propio ID en un campo específico
+    await docRef.update({
+      'id': docId,
+    });
   }
 }

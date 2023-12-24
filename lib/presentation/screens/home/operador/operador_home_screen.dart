@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:time_control_app/domain/entities/task.dart';
+import 'package:time_control_app/presentation/providers/chronometer_provider.dart';
 import 'package:time_control_app/presentation/providers/task_provider.dart';
 import 'package:time_control_app/presentation/views/views.dart';
 
@@ -136,7 +137,7 @@ class _ListTaskWidget extends ConsumerWidget {
                     // Add more UI components as needed
                     subtitle: Text(tasks[index].description),
                     onTap: () {
-                      ref.read(selectTask.notifier).state = tasks[index].id;
+                      ref.read(taskTimeProvider.notifier).state = tasks[index];
                 
                       context.push('/operador/controlTime');
                     },
@@ -150,12 +151,3 @@ class _ListTaskWidget extends ConsumerWidget {
     );
   }
 }
-// AlertDialog(
-//                 title: const Text('Escoge una Tarea'),
-//                 // content: const Text('Todavia no hace nada este button'),\
-//                 content: const SingleChildScrollView(child: _ListTaskWidget()),
-//                 actions: [
-//                   // Mostrar lista de tareas
-//                   ElevatedButton(onPressed: (){}, child: Text('data')),
-//                 ],
-//               )

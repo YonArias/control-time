@@ -9,6 +9,11 @@ class UserRepositoryImpl implements UserRepository {
   UserRepositoryImpl({required this.remoteDataSource});
 
   @override
+  Future<User?> getUser() async {
+    return remoteDataSource.getUser();
+  }
+
+  @override
   Stream<List<User>> getUsers() {
     return remoteDataSource.getUsers();
   }
@@ -22,7 +27,7 @@ class UserRepositoryImpl implements UserRepository {
   Stream<List<User>> getUsersOperario() {
     return remoteDataSource.getUsersOperario();
   }
-  
+
   @override
   Future<void> addUser(User user) async {
     await remoteDataSource.addUser(user);

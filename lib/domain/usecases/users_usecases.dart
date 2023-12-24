@@ -2,6 +2,17 @@
 import 'package:time_control_app/domain/entities/user.dart';
 import 'package:time_control_app/domain/repository/user_repository.dart';
 
+// ** OBTENER UN USUARIO
+class GetUserUseCase {
+  final UserRepository userRepository;
+
+  GetUserUseCase({required this.userRepository});
+
+  Future<User?> getUser() async {
+    return userRepository.getUser();
+  }
+}
+
 // ** MUESTRA TODOS LOS USUARIOS
 class GetUsersUseCase {
   final UserRepository userRepository;

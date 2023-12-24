@@ -20,20 +20,11 @@ final getTasksProvider = Provider<GetTasksUseCase>((ref) => GetTasksUseCase(
       taskRepository: ref.read(taskRepositoryProvider),
     ));
 
-final getTasksDoneProvider =
-    Provider<GetTaskDoneUseCase>((ref) => GetTaskDoneUseCase(
-          taskRepository: ref.read(taskRepositoryProvider),
-        ));
-
 final getTaskProvider =
     Provider<GetTaskUseCase>((ref) => GetTaskUseCase(
           taskRepository: ref.read(taskRepositoryProvider),
         ));
 
-final getTaskDoneUserProvider =
-    Provider<GetTaskDoneUserUseCase>((ref) => GetTaskDoneUserUseCase(
-          taskRepository: ref.read(taskRepositoryProvider),
-        ));
 // Agregar Task
 final addTaskProvider = Provider<AddTaskUseCase>((ref) => AddTaskUseCase(
       taskRepository: ref.read(taskRepositoryProvider),
@@ -42,3 +33,20 @@ final addTaskProvider = Provider<AddTaskUseCase>((ref) => AddTaskUseCase(
 final deleteTaskProvider = Provider<DeleteTaskUseCase>((ref) => DeleteTaskUseCase(
       taskRepository: ref.read(taskRepositoryProvider),
     ));
+
+// TODO: TASK DONE
+// Obtener todos los tasks
+final getTasksDoneProvider =
+    Provider<GetTaskDoneUseCase>((ref) => GetTaskDoneUseCase(
+          taskRepository: ref.read(taskRepositoryProvider),
+        ));
+// Obtener los task del usuario
+final getTaskDoneUserProvider =
+    Provider<GetTaskDoneUserUseCase>((ref) => GetTaskDoneUserUseCase(
+          taskRepository: ref.read(taskRepositoryProvider),
+        ));
+// Agregar task done
+final addTaskDoneProvider =
+    Provider<AddTaskDoneUseCase>((ref) => AddTaskDoneUseCase(
+          taskRepository: ref.read(taskRepositoryProvider),
+        ));

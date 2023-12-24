@@ -13,18 +13,8 @@ class TaskRepositoryImpl implements TaskRepository {
   }
 
   @override
-  Stream<List<TaskDone>> getTasksDone() {
-    return remoteDatasource.getTasksDone();
-  }
-
-  @override
   Future<Task> getTask(String idTask) {
     return remoteDatasource.getTask(idTask);
-  }
-
-  @override
-  Stream<List<TaskDone>> getTasksDoneUser(String idUser) {
-    return remoteDatasource.getTasksDoneUser(idUser);
   }
 
   @override
@@ -35,5 +25,21 @@ class TaskRepositoryImpl implements TaskRepository {
   @override
   Future<void> deleteTask(String idTask) async {
     await remoteDatasource.deleteTask(idTask);
+  }
+
+  // TODO: TASKS DONE
+  @override
+  Stream<List<TaskDone>> getTasksDone() {
+    return remoteDatasource.getTasksDone();
+  }
+
+  @override
+  Stream<List<TaskDone>> getTasksDoneUser(String idUser) {
+    return remoteDatasource.getTasksDoneUser(idUser);
+  }
+
+  @override
+  Future<void> addTaskDone(TaskDone taskDone) async {
+    await remoteDatasource.addTaskDone(taskDone);
   }
 }

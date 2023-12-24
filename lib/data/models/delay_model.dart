@@ -70,4 +70,13 @@ class DelayDoneModel {
         endTime: endTime,
         duration: duration,
       );
+
+  Map<String, dynamic> toDelayDoneJson() => {
+        'id': id,
+        'title': title,
+        'description': description,
+        'duration': duration,
+        'startTime': startTime,
+        'endTime': endTime,
+      };
 }
