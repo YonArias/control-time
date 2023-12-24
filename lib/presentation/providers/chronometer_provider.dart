@@ -7,6 +7,8 @@ final userTimeProvider = StateProvider<User?>((ref) => null);
 final transportTimeProvider = StateProvider<Transport?>((ref) => null);
 final taskTimeProvider = StateProvider<Task?>((ref) => null);
 
+// final timerProvider = Provider((ref) => TimerUseCase());
+
 
 // class ChronometerProvider extends ChangeNotifier {
 //   int _time = 0;

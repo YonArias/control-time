@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:time_control_app/domain/entities/transport.dart';
+import 'package:time_control_app/presentation/providers/chronometer_provider.dart';
 import 'package:time_control_app/presentation/providers/transport_provider.dart';
 
 class SelectMobilityScreen extends StatelessWidget {
@@ -16,10 +17,7 @@ class SelectMobilityScreen extends StatelessWidget {
           title: const Text('Selecciona un vehiculo'),
         ),
         // BODY DE LA APLICACION
-        body: const Padding(
-          padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-          child: _ListTransportFree(),
-        ),
+        body: const _ListTransportFree(),
       ),
     );
   }
@@ -48,21 +46,32 @@ class _ListTransportFree extends ConsumerWidget {
             itemCount: transports.length,
             itemBuilder: (context, index) {
               return InkWell(
-                child: ListTile(
-                  title: Text(
-                    transports[index].name,
-                    style: const TextStyle(color: Colors.white),
+                child: Card(
+                  color: Colors.red[400],
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 30, vertical: 15),
+                    child: ListTile(
+                      title: Text(
+                        transports[index].name,
+                        style: const TextStyle(color: Colors.white),
+                      ),
+                      subtitle: Text(
+                        transports[index].placa, // provider
+                        style: const TextStyle(color: Colors.white),
+                      ),
+                      leading: const Icon(
+                        Icons.airport_shuttle,
+                        size: 32,
+                        color: Colors.white,
+                      ),
+                    ),
                   ),
-                  subtitle: Text(
-                    transports[index].placa, // provider
-                    style: const TextStyle(color: Colors.white),
-                  ),
-                  contentPadding: const EdgeInsets.all(15),
-                  tileColor: Theme.of(context).colorScheme.primary,
                 ),
                 onTap: () {
                   // TODO: Seleccione el vehiculo al usuario
-
+                  ref.read(transportTimeProvider.notifier).state =
+                      transports[index];
                   // Redireccionamos a la pantalla OperarioHome
                   context.go('/operador');
                 },

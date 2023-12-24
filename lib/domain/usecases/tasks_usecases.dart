@@ -1,4 +1,5 @@
 import 'package:time_control_app/domain/entities/task.dart';
+import 'package:time_control_app/domain/entities/user.dart';
 import 'package:time_control_app/domain/repository/task_repository.dart';
 
 class GetTasksUseCase {
@@ -57,8 +58,8 @@ class GetTaskDoneUserUseCase {
 
   GetTaskDoneUserUseCase({required this.taskRepository});
 
-  Stream<List<TaskDone>> getTaskDoneUser(String idUser) {
-    return taskRepository.getTasksDoneUser(idUser);
+  Stream<List<TaskDone>> getTaskDoneUser(User? user) {
+    return taskRepository.getTasksDoneUser(user);
   }
 }
 

@@ -10,6 +10,7 @@ enum StateTransport {
   AWAIT, // En espera
   INNACTIVE, // Sin funcion
   AVAILABLE, // Listo para escoger
+  INAVAILABLE
 }
 
 List<String> rol = [

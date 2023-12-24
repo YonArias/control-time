@@ -40,8 +40,8 @@ class _OperadorHomeScreenState extends State<OperadorHomeScreen> {
             label: 'Historical',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.alarm_add),
-            label: 'Time',
+            icon: Icon(Icons.all_inclusive),
+            label: 'Proximamente',
           ),
         ],
         currentIndex: _selectedIndex,

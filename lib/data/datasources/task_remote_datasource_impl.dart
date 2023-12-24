@@ -1,7 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:time_control_app/data/models/task_model.dart';
+import 'package:time_control_app/data/models/user_model.dart';
 import 'package:time_control_app/domain/datasources/task_datasource.dart';
 import 'package:time_control_app/domain/entities/task.dart';
+import 'package:time_control_app/domain/entities/user.dart';
 
 class TaskRemoteDatasourceImpl implements TaskDatasource {
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
@@ -68,13 +70,22 @@ class TaskRemoteDatasourceImpl implements TaskDatasource {
   }
   
   @override
-  Stream<List<TaskDone>> getTasksDoneUser(String idUser) {
+  Stream<List<TaskDone>> getTasksDoneUser(User? user) {
+    final userMap = UserModel(
+      id: user!.id, 
+      name: user.name, 
+      lastname: user.lastname, 
+      rol: user.rol, 
+      gmail: user.gmail, 
+      isActive: user.isActive, 
+      isValidate: user.isValidate
+    ).toUserJson();
     DateTime today = DateTime.now();
     Timestamp inicioDelDia = Timestamp.fromDate(DateTime(today.year, today.month, today.day));
     Timestamp finDelDia = Timestamp.fromDate(DateTime(today.year, today.month, today.day, 23, 59, 59, 999));
     
     return firestore.collection('doneTasks')
-      .where('idUser', isEqualTo: idUser)
+      .where('user', isEqualTo: userMap )
       .where('startTime', isGreaterThanOrEqualTo: inicioDelDia)
       .where('startTime', isLessThanOrEqualTo: finDelDia)
       .snapshots().map((querySnapshot) {

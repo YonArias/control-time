@@ -52,12 +52,12 @@ class ControlTimeScreen extends StatelessWidget {
               margin: EdgeInsets.symmetric(horizontal: 80),
               child: Center(
                   child: Text(
-                '00:00:00',
+                '00 : 00 : 00',
                 style: TextStyle(fontSize: 36),
               )),
             ),
 
-            _ControllerButtons(),
+            const _ControllerButtons(),
           ],
         ),
       ),
@@ -86,83 +86,81 @@ class __ControllerButtonsState extends State<_ControllerButtons> {
         // Botones controlador
 
         if (!isActive && !isDelay)
-          Consumer(
-            builder: (context, ref, child) => ControllerButtonWidget(
-              icon: Icons.play_arrow,
-              name: 'INICIAR',
-              color: Colors.blue,
-              dark: true,
-              ontap: () {
-                final taskTime = ref.read(taskTimeProvider);
-                final userTime = ref.read(userTimeProvider);
-                final transportTime = ref.read(transportTimeProvider);
+          ControllerButtonWidget(
+            icon: Icons.play_arrow,
+            name: 'INICIAR',
+            color: Colors.blue,
+            dark: true,
+            ontap: () {
+              // final taskTime = ref.read(taskTimeProvider);
+              // final userTime = ref.read(userTimeProvider);
+              // final transportTime = ref.read(transportTimeProvider);
 
-                ref.read(addTaskDoneProvider).addTaskDone(TaskDone(
-                    id: '',
-                    title: taskTime!.title,
-                    description: taskTime.description,
-                    startTime: Timestamp.now(),
-                    endTime: Timestamp.now(),
-                    duration: 0,
-                    user: userTime,
-                    transport: transportTime,
-                    delays: null
-                  ));
-                // TODO: CREAR LA TAREA
-                // ? title, description, id, idTransport, idUser, startTime
+              // ref.read(addTaskDoneProvider).addTaskDone(TaskDone(
+              //     id: '',
+              //     title: taskTime!.title,
+              //     description: taskTime.description,
+              //     startTime: Timestamp.now(),
+              //     endTime: Timestamp.now(),
+              //     duration: 0,
+              //     user: userTime,
+              //     transport: transportTime,
+              //     delays: null));
 
-                // TODO: INICIO DE CRONOMETRO
-                setState(() {
-                  isActive = true;
-                });
-              },
-            ),
+              // TODO: INICIO DE CRONOMETRO
+             
+              setState(() {
+                isActive = true;
+              });
+            },
           ),
         if (isActive)
           Column(
-            children: [
-              ControllerButtonWidget(
-                icon: Icons.alarm_add,
-                name: 'DEMORA',
-                color: Colors.red,
-                dark: true,
-                ontap: () {
-                  // TODO: DETENER CRONOMETRO
+              children: [
+                ControllerButtonWidget(
+                  icon: Icons.alarm_add,
+                  name: 'DEMORA',
+                  color: Colors.red,
+                  dark: true,
+                  ontap: () {
+                    // TODO: DETENER CRONOMETRO
+                    
 
-                  // TODO: APARECER DEMORAS
+                    // TODO: APARECER DEMORAS
 
-                  // TODO: AGREAGAR UNA DEMORA
-                  // ? title, description, id, startTime
+                    // TODO: AGREAGAR UNA DEMORA
+                    // ? title, description, id, startTime
 
-                  // TODO: INICIAR CRONOMETRO DE DEMORA
+                    // TODO: INICIAR CRONOMETRO DE DEMORA
 
-                  // TODO: CAMBIAR EL BOTON
-                  setState(() {
-                    isDelay = true;
-                    isActive = false;
-                  });
-                },
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              ControllerButtonWidget(
-                icon: Icons.check,
-                name: 'TERMINAR',
-                color: Colors.green,
-                dark: true,
-                ontap: () {
-                  // TODO: ASIGNAR LA HORA DE TERMINO
-                  // ? endTIme, duration
+                    // TODO: CAMBIAR EL BOTON
+                    setState(() {
+                      isDelay = true;
+                      isActive = false;
+                    });
+                  },
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                ControllerButtonWidget(
+                  icon: Icons.check,
+                  name: 'TERMINAR',
+                  color: Colors.green,
+                  dark: true,
+                  ontap: () {
+                    // TODO: ASIGNAR LA HORA DE TERMINO
+                    // ? endTIme, duration
 
-                  // TODO: ACABAR TODO
+                    // TODO: ACABAR TODO
+                    
 
-                  // TODO: REDIRECCIONAR AL MENU
-                  context.go('/operador');
-                },
-              ),
-            ],
-          ),
+                    // TODO: REDIRECCIONAR AL MENU
+                    context.go('/operador');
+                  },
+                ),
+              ],
+            ),
         if (isDelay)
           ControllerButtonWidget(
             icon: Icons.alarm_off_outlined,
@@ -171,6 +169,7 @@ class __ControllerButtonsState extends State<_ControllerButtons> {
             dark: true,
             ontap: () {
               // TODO: DETENER CRONOMETRO DEMORA
+              
 
               // TODO: AGREAGAR ATRIBUTOS A DEMORAS
               // ? endTIme, duration
