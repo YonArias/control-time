@@ -1,3 +1,4 @@
+import 'package:cloud_firestore_platform_interface/src/timestamp.dart';
 import 'package:time_control_app/data/datasources/task_remote_datasource_impl.dart';
 import 'package:time_control_app/domain/entities/task.dart';
 import 'package:time_control_app/domain/entities/user.dart';
@@ -30,8 +31,8 @@ class TaskRepositoryImpl implements TaskRepository {
 
   // TODO: TASKS DONE
   @override
-  Stream<List<TaskDone>> getTasksDone() {
-    return remoteDatasource.getTasksDone();
+  Stream<List<TaskDone>> getTasksDone(DateTime? time) {
+    return remoteDatasource.getTasksDone(time);
   }
 
   @override
@@ -40,7 +41,12 @@ class TaskRepositoryImpl implements TaskRepository {
   }
 
   @override
-  Future<void> addTaskDone(TaskDone taskDone) async {
-    await remoteDatasource.addTaskDone(taskDone);
+  Future<String> addTaskDone(TaskDone taskDone) async {
+    return remoteDatasource.addTaskDone(taskDone);
+  }
+
+  @override
+  Future<void> updateTaskDone(String idTaskDone, Timestamp endTime) async {
+    await remoteDatasource.updateTaskDone(idTaskDone, endTime);
   }
 }

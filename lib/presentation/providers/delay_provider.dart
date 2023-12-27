@@ -11,7 +11,7 @@ final delayRepositoryProvider =
           remoteDatasource: ref.read(delayDatasourceProvider),
         ));
 
-// Obtengo todos los vehiculos
+// Obtengo todos los delays
 final getDelaysProvider = Provider<GetDelaysUseCase>((ref) => GetDelaysUseCase(
       delayRepository: ref.read(delayRepositoryProvider),
     ));
@@ -21,6 +21,15 @@ final addDelayProvider = Provider<AddDelayUseCase>((ref) => AddDelayUseCase(
       delayRepository: ref.read(delayRepositoryProvider),
     ));
 // Eliminar Delay
-final deleteDelayProvider = Provider<DeleteDelayUseCase>((ref) => DeleteDelayUseCase(
-      delayRepository: ref.read(delayRepositoryProvider),
-    ));
+final deleteDelayProvider =
+    Provider<DeleteDelayUseCase>((ref) => DeleteDelayUseCase(
+          delayRepository: ref.read(delayRepositoryProvider),
+        ));
+
+// TODO: DELAY DONE
+
+final addDelayDoneProvider = Provider<AddDelayDoneUseCase>((ref) =>
+    AddDelayDoneUseCase(delayRepository: ref.read(delayRepositoryProvider)));
+
+final updateDelayDoneProvider = Provider<UpdateDelayDoneUseCase>((ref) =>
+    UpdateDelayDoneUseCase(delayRepository: ref.read(delayRepositoryProvider)));

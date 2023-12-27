@@ -10,11 +10,7 @@ Future<void> main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  runApp(
-    const ProviderScope(
-      child: MainApp()
-    )
-  );
+  runApp(const ProviderScope(child: MainApp()));
 }
 
 class MainApp extends StatelessWidget {
@@ -22,11 +18,10 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return MaterialApp.router(
-        routerConfig: appRouter,
-        theme: AppTheme(selectedColor: 3).getTheme(),
-        debugShowCheckedModeBanner: false,
-      );
+      routerConfig: appRouter,
+      theme: AppTheme(selectedColor: 3).getTheme(),
+      debugShowCheckedModeBanner: false,
+    );
   }
 }

@@ -6,6 +6,9 @@ import 'package:time_control_app/domain/usecases/tasks_usecases.dart';
 final selectTask = StateProvider<String>(
   (ref) => '',
 );
+final lenghtTask = StateProvider<int>(
+  (ref) => 0,
+);
 
 final taskDatasourceProvider =
     Provider<TaskRemoteDatasourceImpl>((ref) => TaskRemoteDatasourceImpl());
@@ -15,24 +18,24 @@ final taskRepositoryProvider =
           remoteDatasource: ref.read(taskDatasourceProvider),
         ));
 
-// Obtengo todos los vehiculos
+// Obtengo todos las tareas
 final getTasksProvider = Provider<GetTasksUseCase>((ref) => GetTasksUseCase(
       taskRepository: ref.read(taskRepositoryProvider),
     ));
 
-final getTaskProvider =
-    Provider<GetTaskUseCase>((ref) => GetTaskUseCase(
-          taskRepository: ref.read(taskRepositoryProvider),
-        ));
+final getTaskProvider = Provider<GetTaskUseCase>((ref) => GetTaskUseCase(
+      taskRepository: ref.read(taskRepositoryProvider),
+    ));
 
 // Agregar Task
 final addTaskProvider = Provider<AddTaskUseCase>((ref) => AddTaskUseCase(
       taskRepository: ref.read(taskRepositoryProvider),
     ));
 // Eliminar Task
-final deleteTaskProvider = Provider<DeleteTaskUseCase>((ref) => DeleteTaskUseCase(
-      taskRepository: ref.read(taskRepositoryProvider),
-    ));
+final deleteTaskProvider =
+    Provider<DeleteTaskUseCase>((ref) => DeleteTaskUseCase(
+          taskRepository: ref.read(taskRepositoryProvider),
+        ));
 
 // TODO: TASK DONE
 // Obtener todos los tasks
@@ -48,5 +51,10 @@ final getTaskDoneUserProvider =
 // Agregar task done
 final addTaskDoneProvider =
     Provider<AddTaskDoneUseCase>((ref) => AddTaskDoneUseCase(
+          taskRepository: ref.read(taskRepositoryProvider),
+        ));
+// Actualizar task done
+final updateTaskDoneProvider =
+    Provider<UpdateTaskDoneUseCase>((ref) => UpdateTaskDoneUseCase(
           taskRepository: ref.read(taskRepositoryProvider),
         ));

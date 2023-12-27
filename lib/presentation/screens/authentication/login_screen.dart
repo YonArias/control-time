@@ -11,6 +11,7 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    //! COREGIR ESTO
     final pantalla = MediaQuery.of(context).size.width;
 
     if (pantalla >= 1270.0) {

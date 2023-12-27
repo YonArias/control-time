@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:time_control_app/domain/entities/task.dart';
 import 'package:time_control_app/domain/entities/user.dart';
 
@@ -9,7 +10,8 @@ abstract class TaskDatasource {
   Future<void> deleteTask(String idTask);
 
   // TODO: TASK DONE
-  Stream<List<TaskDone>> getTasksDone();
+  Stream<List<TaskDone>> getTasksDone(DateTime? time);
   Stream<List<TaskDone>> getTasksDoneUser(User? user);
-  Future<void> addTaskDone(TaskDone taskDone);
+  Future<String> addTaskDone(TaskDone taskDone);
+  Future<void> updateTaskDone( String idTaskDone, Timestamp endTime);
 }

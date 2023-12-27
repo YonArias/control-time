@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:time_control_app/domain/entities/task.dart';
 import 'package:time_control_app/domain/entities/user.dart';
 import 'package:time_control_app/domain/repository/task_repository.dart';
@@ -48,8 +49,8 @@ class GetTaskDoneUseCase {
 
   GetTaskDoneUseCase({required this.taskRepository});
 
-  Stream<List<TaskDone>> getTaskDone() {
-    return taskRepository.getTasksDone();
+  Stream<List<TaskDone>> getTasksDone(DateTime? time) {
+    return taskRepository.getTasksDone(time);
   }
 }
 
@@ -68,7 +69,17 @@ class AddTaskDoneUseCase {
 
   AddTaskDoneUseCase({required this.taskRepository});
 
-  Future<void> addTaskDone(TaskDone taskDone) async {
+  Future<String> addTaskDone(TaskDone taskDone) async {
     return taskRepository.addTaskDone(taskDone);
+  }
+}
+
+class UpdateTaskDoneUseCase {
+  final TaskRepository taskRepository;
+
+  UpdateTaskDoneUseCase({required this.taskRepository});
+
+  Future<void> updateTaskDone(String idTaskDone, Timestamp endTime) async {
+    return taskRepository.updateTaskDone(idTaskDone, endTime);
   }
 }

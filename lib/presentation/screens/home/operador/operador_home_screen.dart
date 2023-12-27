@@ -85,16 +85,36 @@ class _OperadorHomeScreenState extends State<OperadorHomeScreen> {
         return SizedBox(
           height: 900,
           width: MediaQuery.of(context).size.width,
-          child: const Column(
-            children: [
-              SizedBox(height: 15,),
-              Text('Tareas', style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold
-              ),),
-              SizedBox(height: 10,),
-              Expanded(child: _ListTaskWidget())
-            ],
+          child: Consumer(
+            builder: (context, ref, child) {
+              final transportTime = ref.watch(transportTimeProvider);
+              if (transportTime == null) {
+                return const Center(
+                  child: Text(
+                    'SELECCIONE UN VEHICULO PRIMERO',
+                    textAlign: TextAlign.center,
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 2,
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, ),
+                  ),
+                );
+              }
+              return const Column(
+                children: [
+                  SizedBox(
+                    height: 15,
+                  ),
+                  Text(
+                    'Tareas',
+                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Expanded(child: _ListTaskWidget())
+                ],
+              );
+            },
           ),
         );
       },
@@ -136,9 +156,9 @@ class _ListTaskWidget extends ConsumerWidget {
                     title: Text(tasks[index].title),
                     // Add more UI components as needed
                     subtitle: Text(tasks[index].description),
-                    onTap: () {
+                    onTap: () async {
                       ref.read(taskTimeProvider.notifier).state = tasks[index];
-                
+
                       context.push('/operador/controlTime');
                     },
                   ),
