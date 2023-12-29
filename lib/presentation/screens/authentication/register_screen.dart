@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:time_control_app/data/models/user_model.dart';
+import 'package:time_control_app/presentation/parameters.dart';
 import 'package:time_control_app/presentation/providers/user_provider.dart';
 import 'package:time_control_app/presentation/widgets/custom_inputs/dropdown_custom.dart';
 import 'package:time_control_app/presentation/widgets/custom_inputs/text_input.dart';
@@ -49,7 +50,7 @@ class _FormRegister extends StatefulWidget {
 class __FormRegisterState extends State<_FormRegister> {
   final _formkey = GlobalKey<FormState>();
 
-  List<String> opciones = ['ADMIN', 'OPERARIO', 'JEFE'];
+  List<String> opciones = ROL;
   String opcion = 'OPERARIO';
 
   // Controladores
@@ -121,13 +122,38 @@ class __FormRegisterState extends State<_FormRegister> {
           ),
           const SizedBox(height: 20,),
           // BUTTON
-          _UserButton(
-            validado: _formkey.currentState?.validate(),
-            name: nameController,
-            lastname: lastnameController,
-            rol: opcion,
-            gmail: gmailController,
-            password: passwordController,
+          Consumer(
+            builder: (context, ref, child) {
+              return ElevatedButton(
+                onPressed: () async {
+                  // validado != null && validado == true
+                  if ( true ) {
+                    FirebaseAuth auth = FirebaseAuth.instance;
+
+                    await auth.createUserWithEmailAndPassword(
+                      email: gmailController.text,
+                      password: passwordController.text,
+                    );
+
+                    ref.read(addUserProvider).addUser(UserModel(
+                          id: '',
+                          name: nameController.text,
+                          lastname: lastnameController.text,
+                          rol: opcion,
+                          gmail: gmailController.text,
+                          isActive: false,
+                          isValidate: false,
+                        ).toUserEntity()
+                        );
+
+                    auth.signOut();
+
+                    context.goNamed('main');
+                  }
+                },
+                child: const Text('Registrar'),
+              );
+            },
           ),
 
           ElevatedButton(
@@ -136,56 +162,6 @@ class __FormRegisterState extends State<_FormRegister> {
           ),
         ],
       ),
-    );
-  }
-}
-
-class _UserButton extends ConsumerWidget {
-  const _UserButton({super.key,
-  required this.validado,
-  required this.name,
-  required this.lastname,
-  required this.rol,
-  required this.gmail,
-  required this.password
-  });
-
-  final bool? validado;
-  final TextEditingController name;
-  final TextEditingController lastname;
-  final String rol;
-  final TextEditingController gmail;
-  final TextEditingController password;
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    return ElevatedButton(
-      onPressed: () async {
-        if (validado != null && validado == true) {
-          FirebaseAuth auth = FirebaseAuth.instance;
-
-          await auth.createUserWithEmailAndPassword(
-            email: gmail.text,
-            password: password.text,
-          );
-
-          ref.read(addUserProvider).addUser(UserModel(
-                id: '',
-                name: name.text,
-                lastname: lastname.text,
-                rol: rol,
-                gmail: gmail.text,
-                isActive: false,
-                isValidate: false,
-              ).toUserEntity()
-              );
-
-          auth.signOut();
-
-          context.goNamed('main');
-        }
-      },
-      child: const Text('Registrar'),
     );
   }
 }

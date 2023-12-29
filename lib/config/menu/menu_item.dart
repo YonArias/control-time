@@ -13,18 +13,39 @@ class MenuItem {
       required this.icon});
 }
 
+// WEB
 const appMenuItems = <MenuItem>[
   MenuItem(
-    title: 'Botones',
-    subTitle: 'Varios botones en Flutter',
-    link: '/buttons',
-    icon: Icons.smart_button_outlined,
+    title: 'Operadores',
+    subTitle: 'Lista de operadores',
+    link: '/listOperadores',
+    icon: Icons.people,
+  ),
+  MenuItem(
+    title: 'Operadores',
+    subTitle: 'Estadistica de operadores',
+    link: '/webOperadores',
+    icon: Icons.people,
   ),
 
   MenuItem(
-    title: 'Tarjetas',
-    subTitle: 'Un contenedor estilizado',
-    link: '/card',
-    icon: Icons.credit_card,
+    title: 'Demoras',
+    subTitle: 'Estadistica de demoras',
+    link: '/webDemoras',
+    icon: Icons.alarm_add,
+  ),
+
+  MenuItem(
+    title: 'Transportes',
+    subTitle: 'Estadistica de transportes',
+    link: '/webTransportes',
+    icon: Icons.airport_shuttle,
+  ),
+
+  MenuItem(
+    title: 'Tareas hechas',
+    subTitle: 'Estadistica de tareas hechas',
+    link: '/webTareasHechas',
+    icon: Icons.view_agenda,
   ),
 ];

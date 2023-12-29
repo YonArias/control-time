@@ -13,7 +13,7 @@ enum StateTransport {
   INAVAILABLE
 }
 
-List<String> rol = [
+List<String> ROL = [
   'OPERARIO',
   'SUPERVISOR',
   'ADMIN'

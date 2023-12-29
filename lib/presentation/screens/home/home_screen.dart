@@ -19,10 +19,12 @@ class HomeScreen extends ConsumerWidget {
           final user = await ref.read(getUserProvider).getUser();
           ref.read(userTimeProvider.notifier).state = user;
 
-          if (user!.rol == rol[0]) {
+          if (user!.rol == ROL[0]) {
             context.go('/operador');
-          } else {
+          } else if (user.rol == ROL[1]) {
             context.go('/supervisor');
+          } else if ( user.rol == ROL[2]){
+            context.go('/admin');
           }
         },
         child: Container(
