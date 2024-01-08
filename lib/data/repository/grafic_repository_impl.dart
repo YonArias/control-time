@@ -10,4 +10,14 @@ class GraficRepositoryImpl implements GraficRepository {
   Stream<List<Map<String, dynamic>>> getOperarioTime(DateTime? time) {
     return remoteDatasource.getOperarioTime(time);
   }
+
+  @override
+  Stream<List<Map<String, dynamic>>> getDelayTime(DateTime? time) {
+    return remoteDatasource.getDelayTime(time);
+  }
+
+  @override
+  Stream<List<Map<String, dynamic>>> getTransportTime(DateTime? time) {
+    return remoteDatasource.getTransportTime(time);
+  }
 }

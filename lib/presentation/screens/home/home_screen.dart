@@ -28,12 +28,23 @@ class HomeScreen extends ConsumerWidget {
           }
         },
         child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 50),
           height: MediaQuery.of(context).size.height,
           width: MediaQuery.of(context).size.width,
           decoration: BoxDecoration(
             boxShadow: List.filled(10, const BoxShadow(color: Colors.white)),
+            color: Theme.of(context).colorScheme.background
           ),
-          child: const Center(child: Text('REACCIONA PARA INGRESAR')),
+          child: const Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+            Icon(Icons.privacy_tip_outlined, size: 60),
+            SizedBox(height: 10,),
+            Text('¡Importante mensaje de seguridad!', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+            SizedBox(height: 10,),
+            Text('La seguridad vial es nuestra prioridad. Por favor, evita usar tu teléfono mientras conduces. Mantén tu atención en el camino y sé un conductor responsable.', textAlign: TextAlign.center,),
+            ]
+          ),
         ),
       ),
     );

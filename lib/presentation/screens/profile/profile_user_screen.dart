@@ -34,14 +34,14 @@ class ProfileUserScreen extends StatelessWidget {
             ),
           ),
           
-          Card(
-            child: Container(
-              width: MediaQuery.of(context).size.width-50,
-              height: MediaQuery.of(context).size.width-50,
-              padding: const EdgeInsets.all(150.0),
-              child: const CircularProgressIndicator()
-            ),
-          ),
+          // Card(
+          //   child: Container(
+          //     width: MediaQuery.of(context).size.width-50,
+          //     height: MediaQuery.of(context).size.width-50,
+          //     padding: const EdgeInsets.all(150.0),
+          //     child: const CircularProgressIndicator()
+          //   ),
+          // ),
           const SizedBox(height: 10,),
 
           Text(user!.email ?? '', style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),),

@@ -90,13 +90,20 @@ class _OperadorHomeScreenState extends State<OperadorHomeScreen> {
               final transportTime = ref.watch(transportTimeProvider);
               if (transportTime == null) {
                 return const Center(
-                  child: Text(
-                    'SELECCIONE UN VEHICULO PRIMERO',
-                    textAlign: TextAlign.center,
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 2,
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, ),
-                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(Icons.block_outlined, size: 92),
+                      SizedBox(height: 20,),
+                      Text(
+                        'SELECCIONE UN VEHICULO PRIMERO',
+                        textAlign: TextAlign.center,
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 2,
+                        style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, ),
+                      ),
+                    ],
+                  )
                 );
               }
               return const Column(
@@ -148,12 +155,13 @@ class _ListTaskWidget extends ConsumerWidget {
                 margin:
                     const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                 color:
-                    Colors.red[100], // Theme.of(context).colorScheme.secondary,
+                    Colors.red[300], // Theme.of(context).colorScheme.secondary,
 
                 child: Padding(
                   padding: const EdgeInsets.all(10.0),
                   child: ListTile(
-                    title: Text(tasks[index].title),
+                    leading: const Icon(Icons.task),
+                    title: Text(tasks[index].title, style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
                     // Add more UI components as needed
                     subtitle: Text(tasks[index].description),
                     onTap: () async {

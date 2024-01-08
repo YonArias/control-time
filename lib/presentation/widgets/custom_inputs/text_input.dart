@@ -29,7 +29,6 @@ class TextInput extends StatelessWidget {
         borderSide: BorderSide(color: theme.primary));
 
     return SizedBox(
-      height: 60,
       child: TextFormField(
         // Logica
         controller: controller,
@@ -45,7 +44,7 @@ class TextInput extends StatelessWidget {
           label: Text(
             label,
           ),
-          fillColor: Colors.grey[200],
+          fillColor: Theme.of(context).colorScheme.background,
           filled: true,
           prefixIcon: Icon(
             icon,

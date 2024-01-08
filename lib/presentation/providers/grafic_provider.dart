@@ -15,3 +15,13 @@ final graficRepositoryProvider =
 final getOperarioTimeProvider = Provider<GetOperarioTimeUseCase>((ref) => GetOperarioTimeUseCase(
       graficRepository: ref.read(graficRepositoryProvider),
     ));
+
+// Obtengo los datos de las demoras
+final getDelayTimeProvider = Provider<GetDelayTimeUseCase>((ref) => GetDelayTimeUseCase(
+      graficRepository: ref.read(graficRepositoryProvider),
+    ));
+
+// Obtengo los datos de las demoras
+final getTransportTimeProvider = Provider<GetTransportTimeUseCase>((ref) => GetTransportTimeUseCase(
+      graficRepository: ref.read(graficRepositoryProvider),
+    ));

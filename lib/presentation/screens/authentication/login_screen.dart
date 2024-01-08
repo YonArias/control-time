@@ -71,6 +71,7 @@ class __FormLoginState extends State<_FormLogin> {
   // Creando controladores del formulario
   late TextEditingController emailController;
   late TextEditingController passwordController;
+  final _formkey = GlobalKey<FormState>();
 
   @override
   void initState() {
@@ -90,34 +91,51 @@ class __FormLoginState extends State<_FormLogin> {
   @override
   Widget build(BuildContext context) {
     return Form(
+      key: _formkey,
         child: Column(
       children: [
         // Relleno de formulario
 
         TextInput(
           controller: emailController,
-          label: 'Username',
+          label: 'Correo',
           icon: Icons.person,
+          validator: 'Ingrese su correo',
         ),
         const SizedBox(
           height: 10,
         ),
         TextInput(
           controller: passwordController,
-          label: 'Password',
+          label: 'Contraseña',
           icon: Icons.lock_clock_rounded,
           hive: true,
+          validator: 'Ingrese su contraseña',
         ),
 
         const SizedBox(
           height: 20,
         ),
 
-        _LoginAccess(
-          email: emailController,
-          password: passwordController,
-        ),
+        Consumer(
+          builder: (context, ref, child) {
+            final updateUseActivity = ref.watch(updateUserActivityProvider);
+            return ElevatedButton(
+              onPressed: () async {
+                if (_formkey.currentState!.validate()) {
+                  final String? id = await loguearEmailAndPassword(emailController.text, passwordController.text);
 
+                  if (id != null) {
+                    updateUseActivity.updateUserActivity(id, true);
+
+                    context.go('/home');
+                  }
+                }
+              },
+              child: const Text('ACCEDER'),
+            );
+          },
+        ),
         const SizedBox(
           height: 10,
         ),
@@ -129,30 +147,5 @@ class __FormLoginState extends State<_FormLogin> {
             child: const Text('Registrase')),
       ],
     ));
-  }
-}
-
-class _LoginAccess extends ConsumerWidget {
-  final TextEditingController email;
-  final TextEditingController password;
-
-  const _LoginAccess({super.key, required this.email, required this.password});
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final updateUseActivity = ref.watch(updateUserActivityProvider);
-
-    return ElevatedButton(
-      onPressed: () async {
-        final String? id = await loguearEmailAndPassword(email.text, password.text);
-
-        if (id != null) {
-          updateUseActivity.updateUserActivity(id, true);
-
-          context.go('/home');
-        }
-      },
-      child: const Text('ACCEDER'),
-    );
   }
 }

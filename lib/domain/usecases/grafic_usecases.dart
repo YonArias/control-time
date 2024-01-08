@@ -9,3 +9,23 @@ class GetOperarioTimeUseCase {
     return graficRepository.getOperarioTime(time);
   }
 }
+
+class GetDelayTimeUseCase {
+  final GraficRepository graficRepository;
+
+  GetDelayTimeUseCase({required this.graficRepository});
+
+  Stream<List<Map<String, dynamic>>> getDelayTime(DateTime? time) {
+    return graficRepository.getDelayTime(time);
+  }
+}
+
+class GetTransportTimeUseCase {
+  final GraficRepository graficRepository;
+
+  GetTransportTimeUseCase({required this.graficRepository});
+
+  Stream<List<Map<String, dynamic>>> getTransportTime(DateTime? time) {
+    return graficRepository.getTransportTime(time);
+  }
+}

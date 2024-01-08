@@ -15,6 +15,19 @@ class WebMainScreen extends StatefulWidget {
 
 class _WebMainScreenState extends State<WebMainScreen> {
   int touchedIndex = -1;
+
+  final colores = [
+    Colors.red,
+    Colors.blue,
+    Colors.green,
+    Colors.orange,
+    Colors.pink,
+    Colors.amber,
+    Colors.indigoAccent,
+    Colors.purple,
+    Colors.cyan,
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Consumer(
@@ -57,12 +70,15 @@ class _WebMainScreenState extends State<WebMainScreen> {
                               itemCount: getOperarios.length,
                               itemBuilder: (context, index) => Card(
                                 child: Padding(
-                                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 20, vertical: 10),
                                   child: ListTile(
-                                    title: Text(getOperarios[index]['name']),
-                                    trailing: Text('${getOperarios[index]['duration']~/ 3600}:${(getOperarios[index]['duration']~/ 60) % 60}:${getOperarios[index]['duration']%60}')
+                                      title: Text(getOperarios[index]['name'], style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),),
+                                      trailing: Text(
+                                          '${getOperarios[index]['duration'] ~/ 3600}:${(getOperarios[index]['duration'] ~/ 60) % 60}:${getOperarios[index]['duration'] % 60}',
+                                          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                                        ), 
                                   ),
-                            
                                 ),
                               ),
                             ),
@@ -80,7 +96,7 @@ class _WebMainScreenState extends State<WebMainScreen> {
                       Expanded(
                         child: Card(
                           child: Padding(
-                            padding: const EdgeInsets.fromLTRB(10,50,50,10),
+                            padding: const EdgeInsets.fromLTRB(10, 50, 50, 10),
                             child: Center(
                                 child: BarChart(
                               BarChartData(
@@ -99,13 +115,13 @@ class _WebMainScreenState extends State<WebMainScreen> {
                                           fontWeight: FontWeight.bold,
                                           fontSize: 14,
                                         );
-                                              
+
                                         Widget text = Text(
                                           getOperarios[value.toInt()]['name'],
                                           //operarios[value.toInt()],
                                           style: style,
                                         );
-                                              
+
                                         return SideTitleWidget(
                                           axisSide: meta.axisSide,
                                           space: 16,
@@ -140,8 +156,8 @@ class _WebMainScreenState extends State<WebMainScreen> {
                                   //operarios.length, // Cantidad de operadores
                                   (i) => makeGroupData(
                                       i,
-                                      getOperarios[i
-                                          .toInt()]['duration'] ?? 0.0// times[i.toInt()], // Tiempo total de operadores
+                                      getOperarios[i.toInt()]['duration'] ??
+                                          0.0 // times[i.toInt()], // Tiempo total de operadores
                                       ),
                                 ),
                                 gridData: const FlGridData(show: true),
@@ -154,25 +170,21 @@ class _WebMainScreenState extends State<WebMainScreen> {
                       Expanded(
                         child: Card(
                           child: Center(
-                            child: PieChart(
-                              PieChartData(
-                                
-                                borderData: FlBorderData(
-                                  show: true,
+                            child: PieChart(PieChartData(
+                              borderData: FlBorderData(
+                                show: true,
+                              ),
+                              sectionsSpace: 0,
+                              centerSpaceRadius: 40,
+                              sections: List.generate(
+                                getOperarios.length,
+                                (index) => PieChartSectionData(
+                                  color: colores[index],
+                                  value: getOperarios[index]['duration'],
+                                  title: '${getOperarios[index]['name']}',
                                 ),
-                                sectionsSpace: 0,
-                                centerSpaceRadius: 40,
-                                sections: List.generate(
-                                  getOperarios.length, 
-                                  (index) => PieChartSectionData(
-                                    color: Colors.red[((index%10)+1)*100],
-                                    value: getOperarios[index]['duration'],
-                                    title: '${getOperarios[index]['name']}',
-                                    
-                                  ),
-                                ),
-                              )
-                            ),
+                              ),
+                            )),
                           ),
                         ),
                       ),

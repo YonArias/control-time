@@ -32,28 +32,30 @@ class ControlTimeScreen extends StatelessWidget {
           ),
         ],
       ),
-      body: Container(
-        padding: const EdgeInsets.only(top: 150, left: 20, right: 20),
-        child: Column(
-          children: [
-            Consumer(
-              builder: (context, ref, child) {
-                final taskTime = ref.watch(taskTimeProvider);
-                return Card(
-                  child: ListTile(
-                    title: Center(child: Text(taskTime!.title)),
-                  ),
-                );
-              },
-            ),
-
-            const SizedBox(
-              height: 100,
-            ),
-            // Pantalla o animacion
-
-            const _ControllerButtons(),
-          ],
+      body: SingleChildScrollView(
+        child: Container(
+          padding: const EdgeInsets.only(top: 150, left: 20, right: 20),
+          child: Column(
+            children: [
+              Consumer(
+                builder: (context, ref, child) {
+                  final taskTime = ref.watch(taskTimeProvider);
+                  return Card(
+                    child: ListTile(
+                      title: Center(child: Text(taskTime!.title)),
+                    ),
+                  );
+                },
+              ),
+        
+              const SizedBox(
+                height: 100,
+              ),
+              // Pantalla o animacion
+        
+              const _ControllerButtons(),
+            ],
+          ),
         ),
       ),
     );

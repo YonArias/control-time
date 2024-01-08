@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:time_control_app/config/menu/menu_item.dart';
+import 'package:time_control_app/domain/services/auth_service.dart';
 import 'package:time_control_app/presentation/providers/drawer_provider.dart';
 
 class SideMenu extends ConsumerWidget {
@@ -36,6 +38,27 @@ class SideMenu extends ConsumerWidget {
                 icon: Icon(item.icon),
                 label: Text(item.title),
               )),
+          const Padding(
+            padding: EdgeInsets.fromLTRB(28, 16, 16, 10),
+            child: Divider(),
+          ),
+          // const SizedBox(height: 30,),
+          Container(
+            margin:const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+            height: 50,
+            child: ElevatedButton(
+                onPressed: () async {
+                  await logoutUser();
+                  context.goNamed('main');
+                },
+                child: const Row(
+                  children: [
+                    Icon(Icons.arrow_back),
+                    Text('Cerrar cession')
+                  ],
+                ),
+              ),
+          ),
         ]);
   }
 }

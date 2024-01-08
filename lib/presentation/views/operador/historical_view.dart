@@ -12,37 +12,50 @@ class HistoricalView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        InkWell(
-          child: Container(
-            color: Theme.of(context).colorScheme.inversePrimary,
-            height: 70,
-            child: Consumer(
-              builder: (context, ref, child) {
-                final transportTime = ref.watch(transportTimeProvider);
-
-                if (transportTime != null) {
-                  return Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      const Icon(Icons.airport_shuttle, size: 28,), // Imagen del vehiculo
-                      
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text('${transportTime.name} ( ${transportTime.type} )' ), // Nombre del vehiculo
-                          Text(transportTime.placa) // Placa del vehiculo
-                        ],
-                      )
-                    ],
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+          child: InkWell(
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                color: Theme.of(context).colorScheme.primary,
+                boxShadow: [
+                  BoxShadow(
+                  color: Theme.of(context).colorScheme.primary,
+                    offset: const Offset(0.0,0.1),
+                    blurRadius: 10.0,
+                  ),
+                ],
+              ),
+              height: 70,
+              child: Consumer(
+                builder: (context, ref, child) {
+                  final transportTime = ref.watch(transportTimeProvider);
+          
+                  if (transportTime != null) {
+                    return Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        Icon(Icons.airport_shuttle, size: 36, color: Theme.of(context).colorScheme.surface,), // Imagen del vehiculo
+                        
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text('${transportTime.name} ( ${transportTime.type} )', style: TextStyle(fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.surface),), // Nombre del vehiculo
+                            Text(transportTime.placa, style: TextStyle(color: Theme.of(context).colorScheme.surface,),) // Placa del vehiculo
+                          ],
+                        )
+                      ],
+                    );
+                  }
+                  return const Center(
+                    child: Text('SELECCIONE UN VEHICULO', style: TextStyle(fontWeight: FontWeight.bold),),
                   );
-                }
-                return const Center(
-                  child: Text('SELECCIONE UN VEHICULO', style: TextStyle(fontWeight: FontWeight.bold),),
-                );
-              },
+                },
+              ),
             ),
+            onTap: () => context.push('/home/selectVehicle'),
           ),
-          onTap: () => context.push('/home/selectVehicle'),
         ),
 
         // Lista
@@ -86,6 +99,7 @@ class _ListTimes extends ConsumerWidget {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
+                        const Icon(Icons.task_alt_outlined),
                         Column(
                           children: [
                             Text(
@@ -95,12 +109,14 @@ class _ListTimes extends ConsumerWidget {
                             ),
                           ],
                         ),
+
                         Column(
                           children: [
                             Text(
                                 '${taskDone[index].startTime.toDate().hour}:${taskDone[index].startTime.toDate().minute}:${taskDone[index].startTime.toDate().second}'),
                             Text(
                                 '${taskDone[index].endTime.toDate().hour}:${taskDone[index].endTime.toDate().minute}:${taskDone[index].endTime.toDate().second}'),
+                            Text('${taskDone[index].endTime.toDate().difference(taskDone[index].startTime.toDate())}'),
                           ],
                         )
                       ],

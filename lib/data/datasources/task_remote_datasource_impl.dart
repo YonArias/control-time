@@ -92,13 +92,13 @@ class TaskRemoteDatasourceImpl implements TaskDatasource {
   @override
   Stream<List<TaskDone>> getTasksDoneUser(User? user) {
     final userMap = UserModel(
-            id: user!.id,
-            name: user.name,
-            lastname: user.lastname,
-            rol: user.rol,
-            gmail: user.gmail,
-            isActive: user.isActive,
-            isValidate: user.isValidate)
+            id: user?.id ?? '',
+            name: user?.name ?? '',
+            lastname: user?.lastname ?? '',
+            rol: user?.rol ?? '',
+            gmail: user?.gmail ?? '',
+            isActive: user?.isActive ?? true,
+            isValidate: user?.isValidate ?? true)
         .toUserJson();
     DateTime today = DateTime.now();
     Timestamp inicioDelDia =
